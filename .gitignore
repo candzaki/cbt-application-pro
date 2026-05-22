@@ -8,3 +8,11 @@ env/
 .vscode/
 .DS_Store
 *.log
+submit_debug.log
+flask_errors.log
+download_js.py
+download_models.py
+localtunnel.log
+pinggy.log
+tunnel.log
+tunnel_current.log

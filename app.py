@@ -1,9 +1,16 @@
 # pyrefly: ignore [missing-import]
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import datetime
+import json
+import os
+import threading
 
 app = Flask(__name__)
-app.secret_key = 'cbt_secret_key_ultimate_v3'
+# Use environment variable for secret key (required for production security)
+app.secret_key = os.environ.get('SECRET_KEY', 'cbt_secret_key_ultimate_v3_fallback')
+
+# Thread-safe database lock to prevent race conditions on concurrent requests
+_db_lock = threading.Lock()
 
 # Kunci Jawaban Resmi Ujian Kimia Pascasarjana / Sarjana Lanjut
 ANSWER_KEY = {
@@ -39,9 +46,6 @@ ANSWER_KEY = {
     "30": "B"  # Titrasi Karl Fischer air
 }
 
-import json
-import os
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(BASE_DIR, 'database.json')
 
@@ -49,7 +53,7 @@ def load_db():
     if not os.path.exists(DB_FILE):
         return {"users": {}, "results": {}, "cheats": []}
     try:
-        with open(DB_FILE, 'r') as f:
+        with open(DB_FILE, 'r', encoding='utf-8') as f:
             data = json.load(f)
     except Exception:
         data = {}
@@ -65,11 +69,24 @@ def load_db():
 
 def save_db(data):
     try:
-        with open(DB_FILE, 'w') as f:
-            json.dump(data, f, indent=4)
+        with open(DB_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
     except Exception as e:
         print(f"❌ Failed to save database to {DB_FILE}: {str(e)}")
         raise e
+
+# --- CORS Headers (support cross-origin requests from mobile browsers) ---
+@app.after_request
+def add_security_headers(response):
+    # Allow camera permissions on HTTPS from any origin
+    response.headers['Cross-Origin-Embedder-Policy'] = 'unsafe-none'
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups'
+    # Cache control for HTML pages
+    if 'text/html' in response.content_type:
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    return response
 
 @app.route('/')
 def home():
@@ -86,22 +103,30 @@ def register_page():
 @app.route('/api/register', methods=['POST'])
 def register_api():
     data = request.json
-    nim = data.get("nim")
-    nama = data.get("nama")
-    password = data.get("password")
-    db = load_db()
-    if nim in db["users"]:
-        return jsonify({"error": "NIM sudah terdaftar"}), 400
-    db["users"][nim] = {"nama": nama, "password": password}
-    save_db(db)
+    if not data:
+        return jsonify({"error": "Request body tidak valid"}), 400
+    nim = data.get("nim", "").strip()
+    nama = data.get("nama", "").strip()
+    password = data.get("password", "")
+    if not nim or not nama or not password:
+        return jsonify({"error": "NIM, nama, dan kata sandi wajib diisi"}), 400
+    
+    with _db_lock:
+        db = load_db()
+        if nim in db["users"]:
+            return jsonify({"error": "NIM sudah terdaftar"}), 400
+        db["users"][nim] = {"nama": nama, "password": password}
+        save_db(db)
     return jsonify({"status": "success", "message": "Pendaftaran berhasil, silakan login"}), 200
 
 @app.route('/api/login', methods=['POST'])
 def login_api():
     data = request.json
-    nim = data.get("nim")
-    password = data.get("password")
-    token = data.get("token")
+    if not data:
+        return jsonify({"error": "Request body tidak valid"}), 400
+    nim = data.get("nim", "").strip()
+    password = data.get("password", "")
+    token = data.get("token", "")
     
     db = load_db()
     if nim not in db["users"]:
@@ -121,7 +146,7 @@ def exam():
 
 @app.route('/api/log-strike', methods=['POST'])
 def log_strike():
-    data = request.json
+    data = request.json or {}
     nim = data.get("nim", "Anonim")
     strikes = data.get("strikes", 0)
     
@@ -130,27 +155,15 @@ def log_strike():
         "strike_count": strikes,
         "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
-    db = load_db()
-    db["cheats"].append(log_entry)
-    save_db(db)
-    print(f"⚠️ [ANTI-CHEAT VERSI 3] Mahasiswa (NIM: {nim}) terdeteksi keluar tab! Pelanggaran ke-{strikes}")
+    with _db_lock:
+        db = load_db()
+        db["cheats"].append(log_entry)
+        save_db(db)
+    print(f"⚠️ [ANTI-CHEAT V3] NIM: {nim} terdeteksi keluar tab! Pelanggaran ke-{strikes}")
     return jsonify({"status": "success", "message": "Log kecurangan tersimpan di server"}), 200
 
 @app.route('/api/submit', methods=['POST'])
 def submit_exam():
-    # Debug log to verify endpoint is hit and view raw payload
-    debug_log = os.path.join(BASE_DIR, 'submit_debug.log')
-    try:
-        raw_body = request.get_data(as_text=True)
-        with open(debug_log, 'a') as f:
-            f.write(f"\n=== SUBMIT REACHED AT {datetime.datetime.now()} ===\n")
-            f.write(f"URL: {request.url}\n")
-            f.write(f"Headers: {dict(request.headers)}\n")
-            f.write(f"Raw Body: {raw_body}\n")
-            f.write("-------------------------------------\n")
-    except Exception as ex:
-        print(f"❌ Failed to write to submit_debug.log: {ex}")
-
     try:
         data = request.json or {}
         nim = data.get("nim", "Anonim")
@@ -196,12 +209,14 @@ def submit_exam():
             "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         
-        db = load_db()
-        if "results" not in db:
-            db["results"] = {}
-        db["results"][nim] = result_record
-        save_db(db)
-        print(f"✅ [SUBMIT VERSI 3] NIM: {nim} | Skor Akhir: {score} | Predikat: {predicate} | Status: {status_ujian}")
+        with _db_lock:
+            db = load_db()
+            if "results" not in db:
+                db["results"] = {}
+            db["results"][nim] = result_record
+            save_db(db)
+        
+        print(f"✅ [SUBMIT V3] NIM: {nim} | Skor: {score} | Predikat: {predicate} | Status: {status_ujian}")
         
         return jsonify({
             "status": "success",
@@ -221,32 +236,28 @@ def submit_exam():
             "error": f"Gagal menyimpan jawaban: {str(e)}"
         }), 500
 
+# Health check endpoint for Render
+@app.route('/health')
+def health_check():
+    return jsonify({"status": "ok", "service": "CBT Exam Pro v3"}), 200
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"status": "error", "error": "Endpoint tidak ditemukan"}), 404
+
 @app.errorhandler(Exception)
 def handle_exception(e):
     import traceback
-    log_file = os.path.join(BASE_DIR, 'flask_errors.log')
-    try:
-        with open(log_file, 'a') as f:
-            f.write(f"\n=== GLOBAL EXCEPTION AT {datetime.datetime.now()} ===\n")
-            f.write(f"Request URL: {request.url}\n")
-            f.write(f"Request Method: {request.method}\n")
-            f.write(f"Request Headers: {dict(request.headers)}\n")
-            f.write(f"Exception: {str(e)}\n")
-            traceback.print_exc(file=f)
-            f.write("=======================================\n")
-    except Exception as ex:
-        print(f"❌ Failed to write to flask_errors.log: {ex}")
-    
+    print(f"❌ [GLOBAL ERROR] {request.url}: {str(e)}")
+    traceback.print_exc()
     return jsonify({
         "status": "error",
-        "error": f"Internal Server Error (Global Handler): {str(e)}"
+        "error": f"Internal Server Error: {str(e)}"
     }), 500
 
 if __name__ == '__main__':
     import sys
-    use_https = '--https' in sys.argv or os.environ.get('USE_HTTPS') == 'true'
-    ssl_ctx = 'adhoc' if use_https else None
-    if use_https:
-        print("🔒 Starting Flask server with Adhoc SSL/HTTPS protocol...")
     port = int(os.environ.get('PORT', 5001))
-    app.run(debug=True, host='0.0.0.0', port=port, ssl_context=ssl_ctx)
+    debug = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    print(f"🚀 CBT Exam Pro v3 starting on port {port} (debug={debug})")
+    app.run(debug=debug, host='0.0.0.0', port=port, threaded=True)

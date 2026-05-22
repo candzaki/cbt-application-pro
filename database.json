@@ -1,0 +1,22 @@
+{
+    "users": {
+        "2404060096": {
+            "nama": "Elsa AR",
+            "password": "cantikk"
+        }
+    },
+    "results": {
+        "2404060096": {
+            "nim": "2404060096",
+            "score": 6,
+            "correct": 2,
+            "wrong": 0,
+            "empty": 28,
+            "strikes": 0,
+            "status": "Selesai Normal",
+            "predicate": "Kurang / Tidak Lulus",
+            "timestamp": "2026-05-22 09:35:21"
+        }
+    },
+    "cheats": []
+}

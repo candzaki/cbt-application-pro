@@ -1,0 +1,17 @@
+{
+  "name": "CBT Exam Pro V3",
+  "short_name": "CBT Pro",
+  "description": "Aplikasi Ujian Aman Terstandarisasi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#6366F1",
+  "icons": [
+    {
+      "src": "/static/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

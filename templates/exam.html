@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembar Jawaban Digital - CBT Ujian Komputer</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#6366F1">
+    <link rel="apple-touch-icon" href="/static/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        const savedTheme = localStorage.getItem('cbt_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('cbt_theme', next);
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+
+    <!-- Layar Start Gated -->
+    <div id="start-screen">
+        <div class="start-card">
+            <div class="icon-pulse">🛡️</div>
+            <h2>Konfirmasi Keamanan Pengawasan</h2>
+            <p>Sistem mendeteksi Anda masuk dengan identitas mahasiswa:</p>
+            <div class="nim-badge" id="gated-nim">Loading...</div>
+            
+            <div class="warning-box-rules">
+                <strong>ATURAN MUTLAK INTEGRITAS AKADEMIK:</strong>
+                <ul>
+                    <li>Sistem menggunakan *Lock Screen & Tab Monitoring API* terpusat.</li>
+                    <li>Meninggalkan tab ujian, membuka window baru, atau menekan tombol navigasi luar akan langsung terdeteksi.</li>
+                    <li>Pelanggaran diberikan batas toleransi maksimal sebanyak 3 kali peringatan.</li>
+                    <li><strong>Pada pelanggaran ke-4, lembar ujian akan langsung dikunci sepihak (Force Submit), nilai langsung dikalkulasi, dan status diskualifikasi dikirim ke server.</strong></li>
+                </ul>
+            </div>
+            <button class="btn btn-primary btn-large" onclick="triggerStartExamV3()">Validasi Aturan & Mulai Layar Penuh</button>
+        </div>
+    </div>
+
+    <!-- Sticky Topbar Area -->
+    <header class="topbar hidden" id="topbar">
+        <div class="exam-identity">
+            <h3>Evaluasi Capaian Akademik - Kimia Tingkat Sarjana</h3>
+            <span id="display-nim" class="badge-identity">NIM: --</span>
+        </div>
+        <div class="timer-box">
+            <span class="timer-icon">⏳</span>
+            <div id="timer">01:30:00</div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="exam-progress-bar"></div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <div class="layout hidden" id="main-layout">
+        <main class="main-content">
+            <div class="question-card-wrapper">
+                <div class="question-card-header">
+                    <span class="question-indicator">SOAL NOMOR <span id="q-num">1</span> DARI <span id="q-total">10</span></span>
+                    <span class="weight-indicator">Nilai Maks: 10 Poin</span>
+                </div>
+                <div class="question-body-text" id="q-text">Memuat teks pertanyaan...</div>
+                
+                <div class="options-group" id="options-container">
+                    <!-- Opsi jawaban diisi dinamis oleh JS -->
+                </div>
+            </div>
+
+            <!-- Tombol Aksi Navigasi Bawah -->
+            <div class="actions-area">
+                <button class="btn btn-outline" onclick="navQuestion('prev')">← Kembali</button>
+                <button class="btn btn-doubt" onclick="toggleDoubt()">Tandai Ragu-ragu</button>
+                <button class="btn btn-primary" onclick="navQuestion('next')">Lanjut →</button>
+            </div>
+        </main>
+
+        <!-- Sidebar Grid Navigasi Soal -->
+        <aside class="sidebar">
+            <h4>Peta Navigasi Soal</h4>
+            <div class="legend-container">
+                <div class="legend-item"><span class="dot dot-success"></span> Sudah Terjawab</div>
+                <div class="legend-item"><span class="dot dot-warning"></span> Ragu-ragu</div>
+                <div class="legend-item"><span class="dot dot-normal"></span> Belum Ditinjau</div>
+            </div>
+            
+            <div class="grid-nav" id="grid-nav">
+                <!-- Grid Nomor Generasi Otomatis -->
+            </div>
+            
+            <div class="webcam-container">
+                <video id="webcam-proctor" autoplay playsinline muted></video>
+                <div class="webcam-label"><div class="rec-dot"></div> DIAWASI</div>
+            </div>
+            
+            <button class="btn btn-finish-trigger" onclick="triggerConfirmSubmitV3()" style="margin-top: 24px;">Selesai & Kumpulkan</button>
+        </aside>
+    </div>
+
+    <!-- MODAL 1: Peringatan Pelanggaran Anti-Cheat -->
+    <div id="warning-modal" class="modal-overlay hidden">
+        <div class="modal-box danger-box">
+            <div class="modal-icon" style="color: var(--danger)">🚨</div>
+            <h2 style="color: var(--danger)">Deteksi Aktivitas Ilegal!</h2>
+            <p>Anda terdeteksi keluar dari jendela lembar ujian aktif atau membatalkan mode layar penuh.</p>
+            <div class="strike-alert">Strike Akumulatif: <span id="strike-count">0</span> / 3</div>
+            <p class="sub-alert-text">PERINGATAN: Pada strike berikutnya (ke-4), jawaban Anda akan dipaksa submit.</p>
+            <button class="btn btn-primary" style="width: 100%; background: var(--danger); border-color: var(--danger);" onclick="closeWarningModalV3()">Saya Mengerti, Kembali Mengisi</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Konfirmasi Submit Normal -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h2>Konfirmasi Penyerahan</h2>
+            <p>Apakah Anda sudah yakin dengan semua jawaban Anda? Sistem akan langsung menghitung nilai akhir Anda di backend.</p>
+            <div style="display: flex; gap: 14px; margin-top: 28px;">
+                <button class="btn btn-outline" style="flex: 1;" onclick="closeConfirmModalV3()">Cek Kembali</button>
+                <button class="btn btn-primary" style="flex: 1; background: var(--success); border-color: var(--success);" onclick="executeSubmitV3(false)">Kumpulkan Sekarang</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Peringatan Izin Kamera (Tidak Termasuk Pelanggaran) -->
+    <div id="camera-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-icon" style="color: var(--warning)">📷</div>
+            <h2 style="color: var(--warning)">Akses Kamera Dibutuhkan</h2>
+            <p>Aplikasi ini memerlukan akses ke kamera laptop/PC Anda untuk pengawasan ujian terstandarisasi.</p>
+            
+            <!-- Troubleshooting Tabs Header -->
+            <div class="troubleshoot-tabs">
+                <button class="tab-btn active" id="btn-tab-chrome" onclick="switchTroubleshootTab('chrome')">Chrome/Edge</button>
+                <button class="tab-btn" id="btn-tab-safari" onclick="switchTroubleshootTab('safari')">Safari</button>
+                <button class="tab-btn" id="btn-tab-firefox" onclick="switchTroubleshootTab('firefox')">Firefox</button>
+                <button class="tab-btn" id="btn-tab-lan" onclick="switchTroubleshootTab('lan')">LAN / Insecure</button>
+            </div>
+            
+            <!-- Troubleshooting Tabs Contents -->
+            <div id="content-chrome" class="tab-content active">
+                <ul>
+                    <li>Klik ikon 🔒 **Gembok** di sebelah kiri URL pada address bar browser.</li>
+                    <li>Cari pengaturan **Kamera** (Camera) dan ubah ke **Izinkan** (Allow).</li>
+                    <li>Muat ulang halaman jika diminta, lalu klik tombol coba lagi di bawah.</li>
+                </ul>
+            </div>
+            <div id="content-safari" class="tab-content">
+                <ul>
+                    <li>Buka menu **Safari** -> **Settings for This Website...** di menu bar atas.</li>
+                    <li>Cari baris **Camera** dan ubah pengaturannya menjadi **Allow**.</li>
+                    <li>*Di iOS/iPadOS*: Buka Settings -> Safari -> Camera -> ubah menjadi **Allow**.</li>
+                </ul>
+            </div>
+            <div id="content-firefox" class="tab-content">
+                <ul>
+                    <li>Klik ikon kamera/perizinan di sebelah kiri URL bar.</li>
+                    <li>Klik tanda silang (x) di sebelah **Blocked Temporarily** untuk mereset izin.</li>
+                    <li>Muat ulang halaman, lalu pilih **Allow** saat dialog perizinan muncul.</li>
+                </ul>
+            </div>
+            <div id="content-lan" class="tab-content">
+                <ul>
+                    <li>Masukkan alamat situs ini (misal: `http://192.168.100.49:5001`) ke setting insecure origins Chrome/Edge:</li>
+                    <li>Buka tab baru ke `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, masukkan domain di kolom input, ubah ke **Enabled**, dan klik **Relaunch**.</li>
+                    <li>*Rekomendasi Utama*: Hubungi administrator atau jalankan server via HTTPS dengan parameter `--https` agar otomatis terenkripsi dan aman.</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">Setelah melakukan perbaikan di atas, klik tombol di bawah untuk mengaktifkan kembali kamera.</p>
+            <button id="btn-retry-camera" class="btn btn-primary" style="width: 100%; margin-top: 18px;" onclick="retryCameraAccessV3()">Aktifkan & Coba Lagi</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: Dashboard Hasil Akhir & Skor Dinamis -->
+    <div id="result-screen" class="hidden">
+        <div class="result-dashboard-card">
+            <h2>Evaluasi Selesai</h2>
+            <p id="result-message-status">Rekapitulasi nilai otomatis terhitung.</p>
+            
+            <div class="score-radial-progress">
+                <span id="animated-score">0</span>
+                <small>Skor Ujian</small>
+            </div>
+            
+            <div id="predicate-display" style="font-weight: 700; color: var(--primary); margin-bottom: 24px; font-size: 1.1rem;">Predikat: Memuat...</div>
+            
+            <div class="analytics-grid">
+                <div class="analytic-item text-success">
+                    <span id="stat-correct">0</span>
+                    <label>Benar</label>
+                </div>
+                <div class="analytic-item text-danger">
+                    <span id="stat-wrong">0</span>
+                    <label>Salah</label>
+                </div>
+                <div class="analytic-item text-warning">
+                    <span id="stat-empty">0</span>
+                    <label>Kosong</label>
+                </div>
+            </div>
+            
+            <button class="btn btn-logout-action" onclick="finishAndLogoutV3()">Keluar & Tutup Aplikasi</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/face-api.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/exam.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html>

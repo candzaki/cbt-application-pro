@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem CBT Modern - Daftar Akun</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#6366F1">
+    <link rel="apple-touch-icon" href="/static/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        const savedTheme = localStorage.getItem('cbt_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('cbt_theme', next);
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+    <div class="auth-wrapper">
+        <div class="login-box">
+        <div class="icon-header green">📝</div>
+        <h1>Pendaftaran Akun</h1>
+        <p class="desc">Buat profil ujian CBT Anda</p>
+        
+        <form id="registerForm" onsubmit="executeRegisterV3(event)">
+            <div class="input-group">
+                <label for="nim">Nomor Induk Mahasiswa (NIM)</label>
+                <input type="text" id="nim" class="form-input" placeholder="Contoh: 230145..." required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" class="form-input" placeholder="Masukkan nama Anda" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="password">Kata Sandi</label>
+                <input type="password" id="password" class="form-input" placeholder="Buat kata sandi" required>
+            </div>
+            <button type="submit" class="btn-submit">Daftarkan Akun</button>
+        </form>
+        <a href="/" class="link-back">Sudah punya akun? Masuk di sini</a>
+        </div>
+    </div>
+
+    <script>
+        async function executeRegisterV3(e) {
+            e.preventDefault();
+            const nim = document.getElementById('nim').value.trim();
+            const nama = document.getElementById('nama').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if(nim && nama && password) {
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nim, nama, password })
+                    });
+                    
+                    const data = await response.json();
+                    if(response.ok) {
+                        localStorage.setItem('cbt_saved_nim', nim);
+                        localStorage.setItem('cbt_saved_password', password);
+                        alert(data.message);
+                        window.location.href = '/';
+                    } else {
+                        alert(data.error || 'Pendaftaran gagal');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Terjadi kesalahan jaringan');
+                }
+            }
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html>

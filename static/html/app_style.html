@@ -1,0 +1,192 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    /* Force Plus Jakarta Sans font globally across all elements */
+    * {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    }
+    
+    html, body, [data-testid="stAppViewContainer"] {
+        background: transparent !important;
+    }
+    [data-testid="stHeader"] {
+        background: transparent !important;
+    }
+    
+    /* Remove default Streamlit top padding to eliminate 'bar kosong' */
+    [data-testid="block-container"] {
+        padding-top: 1.5rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 950px !important;
+    }
+    
+    [data-testid="stSidebar"] {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        border-right: 1px solid #cbd5e1 !important;
+        backdrop-filter: blur(12px);
+    }
+    [data-testid="stSidebarCollapseButton"] {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-radius: 8px;
+    }
+
+    /* Light, Clean academic card styling matching the uploaded screenshots */
+    .cbt-container {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 12px;
+        padding: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(12px);
+        color: #1e293b !important;
+    }
+
+    .cbt-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Input text boxes styling */
+    div[data-testid="stTextInput"] input {
+        border-radius: 8px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        padding: 10px 14px !important;
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+    }
+    
+    /* Button styling: Clean Royal Blue */
+    button[kind="primary"], .stButton > button[disabled] {
+        background-color: #1d4ed8 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 10px 24px !important;
+        font-weight: 600 !important;
+        border: none !important;
+        transition: background-color 0.2s ease !important;
+    }
+    button[kind="primary"]:hover {
+        background-color: #1e40af !important;
+    }
+    
+    button[kind="secondary"] {
+        border-radius: 8px !important;
+        padding: 10px 24px !important;
+        font-weight: 600 !important;
+        border: 1.5px solid #cbd5e1 !important;
+        color: #334155 !important;
+        background-color: white !important;
+    }
+
+    /* Hidden triggers wrapper */
+    .hidden-btn-container {
+        display: none !important;
+    }
+
+    /* Strike Warning Indicator */
+    .strike-badge {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 8px;
+    }
+
+    /* Result Radial Chart styling */
+    .score-radial {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 6px solid #1d4ed8;
+        border-radius: 50%;
+        width: 160px;
+        height: 160px;
+        margin: 25px auto;
+        background: rgba(29, 78, 216, 0.05);
+    }
+
+    .score-value {
+        font-size: 52px;
+        font-weight: 800;
+        color: #1d4ed8;
+        line-height: 1;
+    }
+
+    .score-label {
+        font-size: 12px;
+        color: #475569;
+        margin-top: 5px;
+        font-weight: 600;
+    }
+    
+    /* Make question card container solid and clean */
+    div[style*="background: rgba(255, 255, 255, 0.02)"] {
+        background-color: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 8px;
+    }
+    
+    /* Style Streamlit radio options to match the screenshot */
+    div[data-testid="stRadio"] > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    div[data-testid="stRadio"] label {
+        background: #ffffff !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        padding: 14px 20px !important;
+        color: #1e293b !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+    }
+    div[data-testid="stRadio"] label:hover {
+        border-color: #3b82f6 !important;
+        background-color: #f8fafc !important;
+    }
+    div[data-testid="stRadio"] label:has(input:checked) {
+        border-color: #1d4ed8 !important;
+        background-color: #eff6ff !important;
+        box-shadow: 0 0 0 1px #1d4ed8 !important;
+    }
+
+    /* Style Streamlit checkboxes to support yellow highlights */
+    div[data-testid="stCheckbox"] label:has(input:checked) span {
+        background-color: #eab308 !important;
+        border-color: #eab308 !important;
+    }
+    .stCheckbox > label > div[role="checkbox"][aria-checked="true"] {
+        background-color: #eab308 !important;
+        border-color: #eab308 !important;
+    }
+
+    /* Clean up helper iframes */
+    iframe[height="0"] {
+        position: absolute !important;
+        width: 0px !important;
+        height: 0px !important;
+        border: none !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    div:has(> iframe[height="0"]) {
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    div[data-testid="stVerticalBlock"] > div:has(iframe[height="0"]) {
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    </style>

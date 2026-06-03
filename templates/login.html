@@ -34,7 +34,11 @@
         <div class="login-box">
         <div class="icon-header">🔬</div>
         <h1>Portal CBT Utama</h1>
-        <p class="desc">Aplikasi Ujian Aman Terstandarisasi</p>
+        {% if error_message %}
+        <div class="error-banner" style="margin-bottom: 24px; padding: 12px 16px; background: var(--danger-light); border: 1px solid var(--danger); color: var(--danger); border-radius: 14px; font-weight: 600; font-size: 0.9rem; text-align: left; display: flex; align-items: center; gap: 8px;">
+            <span>⚠️</span> <span>{{ error_message }}</span>
+        </div>
+        {% endif %}
         
         <form onsubmit="executeLoginV3(event)">
             <div class="input-group">

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&display=swap');
 
 :root {
     --primary: #4f46e5;
@@ -112,7 +112,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'League Spartan', system-ui, -apple-system, sans-serif !important;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -871,6 +871,27 @@ body {
 }
 .tab-content li strong {
     color: var(--text-main);
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* --- Streamlit Sidebar to Right --- */
+[data-testid="stAppViewContainer"] > section:first-child {
+    right: 0 !important;
+    left: unset !important;
+}
+
+[data-testid="stSidebar"] {
+    right: 0 !important;
+    left: unset !important;
+}
+
+/* Adjust the main content layout to reverse direction so it respects sidebar width on the right */
+[data-testid="stAppViewContainer"] {
+    flex-direction: row-reverse !important;
 }
 
 @keyframes fadeIn {

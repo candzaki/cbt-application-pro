@@ -1,37 +1,10 @@
 {
     "users": {
         "2404060096": {
-            "nama": "Elsa AR",
-            "password": "cantikk"
-        },
-        "TEST001": {
-            "nama": "Test User",
-            "password": "pass123"
+            "nama": "calvin",
+            "password": "ecaayu"
         }
     },
-    "results": {
-        "2404060096": {
-            "nim": "2404060096",
-            "score": 6,
-            "correct": 2,
-            "wrong": 0,
-            "empty": 28,
-            "strikes": 0,
-            "status": "Selesai Normal",
-            "predicate": "Kurang / Tidak Lulus",
-            "timestamp": "2026-05-22 09:35:21"
-        },
-        "TEST001": {
-            "nim": "TEST001",
-            "score": 36,
-            "correct": 11,
-            "wrong": 19,
-            "empty": 0,
-            "strikes": 0,
-            "status": "Selesai Normal",
-            "predicate": "Kurang / Tidak Lulus",
-            "timestamp": "2026-05-22 18:43:53"
-        }
-    },
+    "results": {},
     "cheats": []
 }

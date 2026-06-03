@@ -16,3 +16,5 @@ localtunnel.log
 pinggy.log
 tunnel.log
 tunnel_current.log
+firebase_credentials.json
+node_modules/

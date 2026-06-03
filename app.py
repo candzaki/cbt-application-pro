@@ -756,21 +756,20 @@ elif st.session_state.page == "dashboard":
     # Stylized Exam Card (Kampus Inovatif Style)
     st.markdown(f"""
 <div style="margin-bottom: 24px;">
-    <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 8px;">KIMIA DASAR TA 24</div>
-    <div style="background: #1e293b; border-radius: 16px; overflow: hidden; position: relative; padding: 24px; color: white;">
-        <!-- Decorative rings -->
-        <div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border: 15px solid #1a56db; border-radius: 50%; opacity: 0.8;"></div>
-        <div style="position: absolute; right: 30px; bottom: -30px; width: 80px; height: 80px; border: 12px solid #f59e0b; border-radius: 50%; opacity: 0.9;"></div>
-        
-        <h3 style="color: white; font-size: 1.3rem; margin: 0 0 8px 0; font-weight: 700; position: relative; z-index: 2;">Ujian Akhir Semester</h3>
-        <div style="font-size: 0.9rem; color: #94a3b8; position: relative; z-index: 2;">{st.session_state.nama}</div>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 8px; border-bottom: 1px solid #e2e8f0;">
-        <div style="color: #1a56db; font-weight: 600; font-size: 0.9rem;">04 Juni 2026</div>
-        <div style="border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 8px; color: #1a56db; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-            👁️ Preview
-        </div>
-    </div>
+<div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 8px;">KIMIA DASAR TA 24</div>
+<div style="background: #1e293b; border-radius: 16px; overflow: hidden; position: relative; padding: 24px; color: white;">
+<!-- Decorative rings -->
+<div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border: 15px solid #1a56db; border-radius: 50%; opacity: 0.8;"></div>
+<div style="position: absolute; right: 30px; bottom: -30px; width: 80px; height: 80px; border: 12px solid #f59e0b; border-radius: 50%; opacity: 0.9;"></div>
+<h3 style="color: white; font-size: 1.3rem; margin: 0 0 8px 0; font-weight: 700; position: relative; z-index: 2;">Ujian Akhir Semester</h3>
+<div style="font-size: 0.9rem; color: #94a3b8; position: relative; z-index: 2;">{st.session_state.nama}</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 8px; border-bottom: 1px solid #e2e8f0;">
+<div style="color: #1a56db; font-weight: 600; font-size: 0.9rem;">04 Juni 2026</div>
+<div style="border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 8px; color: #1a56db; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+👁️ Preview
+</div>
+</div>
 </div>
 """, unsafe_allow_html=True)
         
@@ -788,35 +787,35 @@ elif st.session_state.page == "dashboard":
 
     # Mock Bottom Navigation menu matching screenshots
     st.markdown("""
-        <div style="
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid #cbd5e1;
-            padding-top: 15px;
-            margin-top: 35px;
-            background: #f8fafc;
-            margin-left: -30px;
-            margin-right: -30px;
-            margin-bottom: -30px;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            padding-bottom: 15px;
-        ">
-            <div style="text-align: center; color: #1d4ed8; font-weight: bold; cursor: pointer;">
-                <div style="font-size: 1.25em;">🏠</div>
-                <div style="font-size: 0.72em; margin-top: 2px;">Beranda</div>
-            </div>
-            <div style="text-align: center; color: #64748b; cursor: pointer;">
-                <div style="font-size: 1.25em;">📋</div>
-                <div style="font-size: 0.72em; margin-top: 2px;">Riwayat Saya</div>
-            </div>
-            <div style="text-align: center; color: #64748b; cursor: pointer;">
-                <div style="font-size: 1.25em;">👤</div>
-                <div style="font-size: 0.72em; margin-top: 2px;">Profil</div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+<div style="
+display: flex;
+justify-content: space-around;
+align-items: center;
+border-top: 1px solid #cbd5e1;
+padding-top: 15px;
+margin-top: 35px;
+background: #f8fafc;
+margin-left: -30px;
+margin-right: -30px;
+margin-bottom: -30px;
+border-bottom-left-radius: 12px;
+border-bottom-right-radius: 12px;
+padding-bottom: 15px;
+">
+<div style="text-align: center; color: #1d4ed8; font-weight: bold; cursor: pointer;">
+<div style="font-size: 1.25em;">🏠</div>
+<div style="font-size: 0.72em; margin-top: 2px;">Beranda</div>
+</div>
+<div style="text-align: center; color: #64748b; cursor: pointer;">
+<div style="font-size: 1.25em;">📋</div>
+<div style="font-size: 0.72em; margin-top: 2px;">Riwayat Saya</div>
+</div>
+<div style="text-align: center; color: #64748b; cursor: pointer;">
+<div style="font-size: 1.25em;">👤</div>
+<div style="font-size: 0.72em; margin-top: 2px;">Profil</div>
+</div>
+</div>
+""", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # 4. Gated rules (Identification photo scan)

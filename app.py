@@ -358,7 +358,8 @@ def init_firebase():
             else:
                 cred = credentials.Certificate('firebase_credentials.json')
             firebase_admin.initialize_app(cred)
-        _firestore_db = firestore.client()
+        # Using specific named database 'cbt-application-pro' as requested
+        _firestore_db = firestore.client(database="cbt-application-pro")
         return _firestore_db
     except Exception as e:
         print(f"Failed to connect to Firebase: {e}")

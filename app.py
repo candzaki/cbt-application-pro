@@ -560,36 +560,14 @@ if st.session_state.page == "login":
         st.markdown("<div class='cbt-container' style='padding-top: 30px;'>", unsafe_allow_html=True)
         # Curve banner header
         logo_url = get_logo_base64()
-        st.markdown(f"""
-        <div style="
-            background: #1d4ed8; 
-            height: 120px; 
-            border-top-left-radius: 12px; 
-            border-top-right-radius: 12px;
-            border-bottom-left-radius: 50% 30px;
-            border-bottom-right-radius: 50% 30px;
-            margin: -30px -30px 20px -30px;
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2);
-        "></div>
-        <div style="text-align: center; margin-top: -85px; margin-bottom: 15px;">
-            <div style="
-                display: inline-block;
-                background: #fff;
-                border-radius: 50%;
-                padding: 10px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-                width: 100px;
-                height: 100px;
-            ">
-                <img src="{logo_url}" 
-                     style="width: 80px; height: 80px; object-fit: contain; border-radius: 50%;">
-            </div>
+        st.markdown("""
+        <div class="cbt-banner"></div>
+        <div class="cbt-logo-wrap">
+            <img src="{logo_url}">
         </div>
-        <div style='text-align: center;'>
-            <h2 style='color: #1d4ed8; font-weight: 800; margin-bottom: 5px; margin-top:0;'>CBT APPLICATION</h2>
-            <p style='color: #64748b; font-size: 0.9em; margin-bottom: 25px;'>Selamat datang! Silakan masuk dengan username dan password akun Anda.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        <div class="cbt-title">CBT APPLICATION</div>
+        <div class="cbt-subtitle">Selamat datang! Silakan masuk dengan NIM & kata sandi Anda.</div>
+        """.format(logo_url=logo_url), unsafe_allow_html=True)
         
         nim = st.text_input("Username", value=st.session_state.get("reg_nim", ""))
         password = st.text_input("Password", type="password", value=st.session_state.get("reg_password", ""))
@@ -648,11 +626,12 @@ elif st.session_state.page == "register":
     with col_r2:
         st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
         st.markdown("""
-            <div class='cbt-header' style='border-bottom: none; margin-bottom: 10px;'>
-                <div class='cbt-header-icon' style='color:#1d4ed8;'>📝</div>
-                <h2 style='color:#1d4ed8; font-weight:800; margin-top:0;'>Pendaftaran Akun</h2>
-                <p style='color: #64748b; font-size:0.9em;'>Buat profil baru untuk ujian CBT</p>
+            <div class="cbt-banner"></div>
+            <div class="cbt-logo-wrap" style="margin-top:-52px;">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);font-size:2.5rem;border:3px solid rgba(99,102,241,0.5);box-shadow:0 0 0 6px rgba(99,102,241,0.1);">📝</span>
             </div>
+            <div class="cbt-title">Pendaftaran Akun</div>
+            <div class="cbt-subtitle">Buat profil baru untuk mengikuti ujian CBT</div>
         """, unsafe_allow_html=True)
         
         nim = st.text_input("Nomor Induk Mahasiswa (NIM)")

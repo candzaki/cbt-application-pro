@@ -442,15 +442,9 @@ if "photo_captured" not in st.session_state:
     st.session_state.photo_captured = None
 if "simulasi_done" not in st.session_state:
     st.session_state.simulasi_done = False
+# Theme is locked to light
 if "theme" not in st.session_state:
     st.session_state.theme = "light"
-
-# Global Sidebar Theme Toggle (Icon Only)
-with st.sidebar:
-    theme_icon = "☀️" if st.session_state.theme == "dark" else "🌙"
-    if st.button(theme_icon, key="theme_toggle_btn", help="Ubah Tema"):
-        st.session_state.theme = "light" if st.session_state.theme == "dark" else "dark"
-        st.rerun()
 
 
 # Captcha generation

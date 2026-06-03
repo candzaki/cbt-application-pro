@@ -22,6 +22,35 @@
         box-sizing: border-box;
     }
 
+    /* Floating Theme Button */
+    div[data-testid="stElementContainer"]:has(button[title="Ubah Tema (Terang/Gelap)"]) {
+        position: fixed !important;
+        top: 15px !important;
+        right: 20px !important;
+        z-index: 999999 !important;
+        width: auto !important;
+    }
+    
+    button[title="Ubah Tema (Terang/Gelap)"] {
+        background: rgba(30, 41, 59, 0.8) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid #334155 !important;
+        border-radius: 50% !important;
+        padding: 8px !important;
+        width: 44px !important;
+        height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    button[title="Ubah Tema (Terang/Gelap)"]:hover {
+        transform: scale(1.1) !important;
+        background: #1e293b !important;
+    }
+
     html, body, [data-testid="stAppViewContainer"] {
         /* Subtle grid background for Dark theme */
         background-color: #0f172a !important;

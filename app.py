@@ -871,6 +871,64 @@ elif st.session_state.page == "exam":
     
     st.sidebar.markdown("---")
     
+    # Sidebar: Peta Navigasi Soal
+    with st.sidebar:
+        st.markdown("""
+<div style="font-weight: 700; color: #0f172a; margin-bottom: 16px; font-size: 1.1rem;">Navigasi Soal</div>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+        """, unsafe_allow_html=True)
+        
+        for row in range(6):
+            cols = st.columns(5)
+            for col_idx in range(5):
+                q_num = row * 5 + col_idx + 1
+                if q_num > len(QUESTIONS): continue
+                with cols[col_idx]:
+                    is_current = (st.session_state.current_q == q_num)
+                    is_doubt = st.session_state.doubts.get(str(q_num), False)
+                    is_answered = (st.session_state.answers.get(str(q_num)) is not None)
+                    
+                    if is_current:
+                        label = f"👉{q_num}"
+                    elif is_doubt:
+                        label = f"🟡{q_num}"
+                    elif is_answered:
+                        label = f"🟢{q_num}"
+                    else:
+                        label = f"⚪{q_num}"
+                        
+                    if st.button(label, key=f"nav_grid_{q_num}", use_container_width=True):
+                        st.session_state.current_q = q_num
+                        st.rerun()
+                        
+        st.markdown("</div>", unsafe_allow_html=True)
+        
+        # Calculations
+        answered_c = len([ans for ans in st.session_state.answers.values() if ans])
+        doubt_c = len([dbt for dbt in st.session_state.doubts.values() if dbt])
+        not_answered_c = len(QUESTIONS) - answered_c
+        
+        st.markdown(f"""
+<div style="background: white; border-radius: 12px; padding: 15px; border: 1px solid #e2e8f0; margin-top: 20px;">
+<div style="font-weight: 700; color: #0f172a; margin-bottom: 12px;">Keterangan</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+<div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">🟢 Dijawab</span> <strong style="color: #1e293b;">{answered_c}</strong></div>
+<div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">🟡 Ragu-ragu</span> <strong style="color: #1e293b;">{doubt_c}</strong></div>
+<div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">⚪ Belum</span> <strong style="color: #1e293b;">{not_answered_c}</strong></div>
+</div>
+<hr style="border: none; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+<span style="font-size: 0.85em; font-weight: 600; color: #64748b;">Sisa Waktu</span>
+<span style="font-weight: 800; color: #ef4444; background: #fee2e2; padding: 4px 12px; border-radius: 20px;" id="countdown">--:--</span>
+</div>
+</div>
+        """, unsafe_allow_html=True)
+        render_countdown_timer(5400) # 90 minutes
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("Selesaikan Ujian", type="primary", use_container_width=True):
+            submit_exam_results(is_forced=False)
+    
     # (Peta Navigasi Soal removed from sidebar as it is now in the main left column)
     # Hidden controls
     st.markdown("<div class='hidden-btn-container'>", unsafe_allow_html=True)
@@ -901,94 +959,19 @@ elif st.session_state.page == "exam":
     # Main Question Panel (Single Column Layout matching middle screen in screenshot)
     st.markdown("<div style='max-width: 1080px; margin: 0 auto; padding-top: 25px;'>", unsafe_allow_html=True)
     
-    # 2 Column layout for Exam Grid and Question
-    col_q1, col_q2 = st.columns([1, 2.5], gap="large")
+    # 1 Column layout for Exam Question
+    q_data = QUESTIONS[st.session_state.current_q - 1]
+    q_id_str = str(q_data["id"])
     
-    with col_q1:
-        st.markdown("""
-        <div style="background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-            <div style="font-weight: 700; color: #0f172a; margin-bottom: 16px; font-size: 1.1rem;">Navigasi Soal</div>
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
-        """, unsafe_allow_html=True)
-        
-        # Grid directly in col_q1
-        for q_num in range(1, len(QUESTIONS) + 1):
-            is_current = (st.session_state.current_q == q_num)
-            is_doubt = st.session_state.doubts.get(str(q_num), False)
-            is_answered = (st.session_state.answers.get(str(q_num)) is not None)
-            
-            # Use columns to render the grid properly without creating a huge HTML string,
-            # wait, streamlit buttons inside columns are better.
-            # But grid layout in HTML with Streamlit buttons is tricky. We can use a Streamlit grid or columns.
-            pass
-            
-        # We will render the grid using Streamlit columns inside col_q1
-        for row in range(6):
-            cols = st.columns(5)
-            for col_idx in range(5):
-                q_num = row * 5 + col_idx + 1
-                if q_num > len(QUESTIONS): continue
-                with cols[col_idx]:
-                    is_current = (st.session_state.current_q == q_num)
-                    is_doubt = st.session_state.doubts.get(str(q_num), False)
-                    is_answered = (st.session_state.answers.get(str(q_num)) is not None)
-                    
-                    if is_current:
-                        label = f"👉{q_num}"
-                    elif is_doubt:
-                        label = f"🟡{q_num}"
-                    elif is_answered:
-                        label = f"🟢{q_num}"
-                    else:
-                        label = f"⚪{q_num}"
-                        
-                    if st.button(label, key=f"nav_grid_{q_num}", use_container_width=True):
-                        st.session_state.current_q = q_num
-                        st.rerun()
-                        
-        st.markdown("</div></div>", unsafe_allow_html=True)
-        
-        # Calculations
-        answered_c = len([ans for ans in st.session_state.answers.values() if ans])
-        doubt_c = len([dbt for dbt in st.session_state.doubts.values() if dbt])
-        not_answered_c = len(QUESTIONS) - answered_c
-        
-        st.markdown(f"""
-        <div style="background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0;">
-            <div style="font-weight: 700; color: #0f172a; margin-bottom: 16px; font-size: 1.1rem;">Keterangan</div>
-            <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
-                <div style="display: flex; justify-content: space-between;"><span>🟢 Dijawab</span> <strong>{answered_c}</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>🟡 Ragu-ragu</span> <strong>{doubt_c}</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span>⚪ Belum</span> <strong>{not_answered_c}</strong></div>
-            </div>
-            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 15px 0;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-                <span style="font-size: 0.85em; font-weight: 600; color: #64748b;">Sisa Waktu</span>
-                <span style="font-weight: 800; color: #ef4444; background: #fee2e2; padding: 4px 12px; border-radius: 20px;" id="countdown">--:--</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        render_countdown_timer(5400) # 90 minutes
-        
-        if st.button("Selesaikan Ujian", type="primary", use_container_width=True):
-            submit_exam_results(is_forced=False)
-            
-    with col_q2:
-        q_data = QUESTIONS[st.session_state.current_q - 1]
-        q_id_str = str(q_data["id"])
-        
-        # Question header
-        st.markdown(f"""
-        <div style="background: white; border: 1px solid #e2e8f0; padding: 24px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0; color: #0f172a; font-weight: 800; font-size: 1.4rem;">Pertanyaan {st.session_state.current_q}/{len(QUESTIONS)}</h2>
-                <div style="background: #f1f5f9; color: #64748b; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">Pilihan Ganda</div>
-            </div>
-            <div style="font-size: 1.1rem; line-height: 1.7; color: #1e293b; margin-bottom: 24px;">
-                {q_data["text"]}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    # Question header
+    st.markdown(f"""
+<div style="background: white; border: 1px solid #e2e8f0; padding: 24px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+<h2 style="margin: 0; color: #0f172a; font-weight: 800; font-size: 1.4rem;">Pertanyaan {st.session_state.current_q}/{len(QUESTIONS)}</h2>
+<div style="background: #f1f5f9; color: #64748b; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">Pilihan Ganda</div>
+</div>
+</div>
+    """, unsafe_allow_html=True)
     
     # Question body text card
     st.markdown(f"""

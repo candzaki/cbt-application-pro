@@ -803,47 +803,46 @@ elif st.session_state.page == "dashboard":
                 <div style="font-size: 0.72em; margin-top: 2px;">Profil</div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # 4. Gated rules (Identification photo scan)
 elif st.session_state.page == "gated_rules":
     st.markdown("<div style='max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);'>", unsafe_allow_html=True)
     st.markdown("<h2 style='color: #0f172a; font-weight: 800; font-size: 1.8rem; margin-bottom: 8px;'>🛡️ Validasi Identitas & Pengawasan</h2>", unsafe_allow_html=True)
-        st.write("Silakan izinkan kamera dan ambil foto verifikasi wajah Anda sebelum membuka lembar ujian.")
-        
-        agree = st.checkbox("Saya setuju untuk mengikuti tata tertib pengawasan ujian akademik.",
-                            value=st.session_state.get("gated_agree", False))
-        st.session_state.gated_agree = agree
+    st.write("Silakan izinkan kamera dan ambil foto verifikasi wajah Anda sebelum membuka lembar ujian.")
+    
+    agree = st.checkbox("Saya setuju untuk mengikuti tata tertib pengawasan ujian akademik.",
+                        value=st.session_state.get("gated_agree", False))
+    st.session_state.gated_agree = agree
 
-        photo = st.camera_input("Ambil Foto Verifikasi Wajah")
-        
-        # Simpan foto ke session_state segera saat ada foto baru
-        if photo is not None:
-            st.session_state.photo_captured = photo.getvalue()
-        
-        # Tampilkan status foto
-        if st.session_state.photo_captured is not None:
-            st.success("✅ Wajah Anda telah terekam dan terverifikasi! Klik **Mulai Ujian** untuk melanjutkan.")
-        else:
-            st.info("📷 Silakan ambil foto wajah Anda terlebih dahulu menggunakan kamera di atas.")
-        
-        # Tombol Mulai Ujian — aktif jika agree DAN foto sudah ada di session_state
-        photo_ok = st.session_state.photo_captured is not None
-        btn_disabled = not (agree and photo_ok)
-        
-        if btn_disabled:
-            if not agree:
-                st.warning("⚠️ Centang persetujuan tata tertib di atas untuk melanjutkan.")
-            elif not photo_ok:
-                st.warning("⚠️ Ambil foto verifikasi wajah terlebih dahulu.")
-        
-        if st.button("▶️ Mulai Ujian", use_container_width=True, type="primary", disabled=btn_disabled):
-            st.session_state.page = "exam"
-            st.session_state.start_time = time.time()
-            st.rerun()
+    photo = st.camera_input("Ambil Foto Verifikasi Wajah")
+    
+    # Simpan foto ke session_state segera saat ada foto baru
+    if photo is not None:
+        st.session_state.photo_captured = photo.getvalue()
+    
+    # Tampilkan status foto
+    if st.session_state.photo_captured is not None:
+        st.success("✅ Wajah Anda telah terekam dan terverifikasi! Klik **Mulai Ujian** untuk melanjutkan.")
+    else:
+        st.info("📷 Silakan ambil foto wajah Anda terlebih dahulu menggunakan kamera di atas.")
+    
+    # Tombol Mulai Ujian — aktif jika agree DAN foto sudah ada di session_state
+    photo_ok = st.session_state.photo_captured is not None
+    btn_disabled = not (agree and photo_ok)
+    
+    if btn_disabled:
+        if not agree:
+            st.warning("⚠️ Centang persetujuan tata tertib di atas untuk melanjutkan.")
+        elif not photo_ok:
+            st.warning("⚠️ Ambil foto verifikasi wajah terlebih dahulu.")
+    
+    if st.button("▶️ Mulai Ujian", use_container_width=True, type="primary", disabled=btn_disabled):
+        st.session_state.page = "exam"
+        st.session_state.start_time = time.time()
+        st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
-
 
 # 5. Exam Page
 elif st.session_state.page == "exam":

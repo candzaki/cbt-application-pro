@@ -664,139 +664,117 @@ elif st.session_state.page == "register":
 
 # 3. Student Dashboard
 elif st.session_state.page == "dashboard":
-    col_d1, col_d2, col_d3 = st.columns([1, 2.2, 1])
-    with col_d2:
-        st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
-        # Header profile
-        st.markdown(f"""
+    # Sidebar Navigation
+    st.sidebar.markdown("""
+        <div style="text-align: center; margin-bottom: 40px; margin-top: 20px;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #1a56db; line-height: 1.2;">Kampus<br>Inovatif</div>
+            <div style="font-size: 0.7rem; color: #64748b;">Oleh GuruInovatif.id</div>
+        </div>
+        <div style="font-size: 0.8rem; color: #64748b; font-weight: 700; margin-bottom: 12px; margin-left: 12px;">Menu</div>
+        <div style="background: #1a56db; color: white; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; cursor: pointer;">
+            <span>🏠</span> Beranda
+        </div>
+        <div style="color: #64748b; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; cursor: pointer;">
+            <span>📋</span> Kelas
+        </div>
+        <div style="font-size: 0.8rem; color: #64748b; font-weight: 700; margin-bottom: 12px; margin-left: 12px;">Lainnya</div>
+        <div style="color: #64748b; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+            <span>⚙️</span> Pengaturan
+        </div>
+        <br><br>
+    """, unsafe_allow_html=True)
+    
+    if st.sidebar.button("Logout", use_container_width=True):
+        st.session_state.clear()
+        st.session_state.page = "login"
+        st.rerun()
+
+    # Main Content Area
+    st.markdown("<div style='max-width: 1080px; margin: 0 auto;'>", unsafe_allow_html=True)
+    
+    # Header profile
+    st.markdown(f"""
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+            <div>
+                <h1 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin: 0;">Beranda</h1>
+                <div style="color: #64748b; font-size: 0.85rem;">Menu / Beranda</div>
+            </div>
             <div style="display: flex; align-items: center; gap: 16px;">
+                <span style="color: #94a3b8; font-size: 1.2rem;">🔔</span>
                 <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" 
-                     style="width: 54px; height: 54px; border-radius: 50%; object-fit: cover;">
+                     style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
                 <div>
-                    <div style="color: var(--text-muted); font-size: 0.85em; font-weight: 500;">Mahasiswa</div>
-                    <div style="font-weight: 700; color: var(--text); font-size: 1.2em;">{st.session_state.nama}</div>
+                    <div style="font-weight: 700; color: #1e293b; font-size: 0.95em;">{st.session_state.nama}</div>
+                    <div style="color: #64748b; font-size: 0.8em; font-weight: 500;">Mahasiswa</div>
                 </div>
-            </div>
-            <div style="font-size: 1.3em; cursor: pointer; color: #64748b; position: relative;">
-                🔔
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Red warning simulation block styled precisely like screenshot
-        if not st.session_state.simulasi_done:
-            st.markdown("""
-            <div style="
-                border: 2px dashed #f87171;
-                background-color: #fef2f2;
-                padding: 20px;
-                border-radius: 8px;
-                margin-bottom: 15px;
-            ">
-                <strong style="color:#b91c1c; font-size: 0.95em;">Anda belum melakukan simulasi ujian</strong>
-                <p style="font-size: 0.85em; margin-top: 6px; margin-bottom: 0px; color: #7f1d1d; line-height: 1.45;">
-                    Harap melakukan simulasi ujian terlebih dahulu agar Anda dapat memahami tata cara ujian yang digunakan
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-            if st.button("Simulasi Ujian", use_container_width=True, type="primary"):
-                st.session_state.simulasi_done = True
-                st.success("Simulasi berhasil dijalankan! Anda sekarang siap mengikuti ujian utama.")
-                time.sleep(1.5)
-                st.rerun()
-        else:
-            st.success("✅ Anda telah menyelesaikan Simulasi Ujian.")
-            
-        st.markdown("<h3 style='color: #1e293b; font-size: 1.1em; margin-top: 25px; margin-bottom: 15px;'>Ujian Hari Ini (4)</h3>", unsafe_allow_html=True)
-        
-        # Exam card matching layout
-        st.markdown(f"""
-        <div style="
-            border: 1.5px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: white;
-        ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <span style="font-size: 0.85em; font-weight: bold; color: #1e293b;">UAS MATEMATIKA KELAS 9</span>
-                <span style="background: #e6f4ea; color: #137333; padding: 4px 10px; border-radius: 30px; font-size: 0.8em; font-weight: bold;">
-                    Sedang Berlangsung - 00:59:59
-                </span>
-            </div>
-            
-            <div style="font-size: 0.88em; line-height: 2.2; color: #475569; margin-bottom: 15px;">
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; margin-bottom: 4px;">
-                    <span>👤 Kode Peserta</span>
-                    <strong style="color: #1e293b;">{st.session_state.nim}</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; margin-bottom: 4px;">
-                    <span>📅 Tanggal Ujian</span>
-                    <strong style="color: #1e293b;">10 Oktober 2025</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; margin-bottom: 4px;">
-                    <span>🕒 Jam Ujian</span>
-                    <strong style="color: #1e293b;">10:00 s.d 11:30</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; margin-bottom: 4px;">
-                    <span>⏳ Durasi Ujian</span>
-                    <strong style="color: #1e293b;">90 Menit</strong>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; margin-bottom: 4px;">
-                    <span>📊 Skor Anda</span>
-                    <strong style="color: #1e293b;">Anda belum mengerjakan ujian</strong>
+    # Metrics Cards
+    st.markdown("""
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="background: #dcfce7; color: #16a34a; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">✅</div>
+                <div>
+                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Total Ujian</div>
+                    <div style="color: #16a34a; font-weight: 800; font-size: 1.5rem;">20 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
                 </div>
             </div>
-            
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85em; color: #137333; font-weight: 600; margin-bottom: 12px;">
-                <span style="font-size: 1.1em;">✔</span> Peserta Terverifikasi
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="background: #fef3c7; color: #d97706; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📄</div>
+                <div>
+                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Diambil</div>
+                    <div style="color: #d97706; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
+                </div>
             </div>
-            <p style="font-size: 0.8em; color: #64748b; margin-bottom: 0px; line-height: 1.4;">
-                Waktu ujian telah dimulai. Anda dapat mengerjakan soal dari pukul 10.00 sampai dengan 11.30 WIB.
-            </p>
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="background: #fee2e2; color: #dc2626; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📚</div>
+                <div>
+                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Tersisa</div>
+                    <div style="color: #dc2626; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Verification webcam rules integration before start
+    st.markdown("<h3 style='color: #1e293b; font-size: 1.2em; font-weight: 700; margin-bottom: 20px;'>Ujian Mendatang</h3>", unsafe_allow_html=True)
+        
+    # Stylized Exam Card (Kampus Inovatif Style)
+    st.markdown(f"""
+        <div style="margin-bottom: 24px;">
+            <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 8px;">KIMIA DASAR TA 24</div>
+            <div style="background: #1e293b; border-radius: 16px; overflow: hidden; position: relative; padding: 24px; color: white;">
+                <!-- Decorative rings -->
+                <div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border: 15px solid #1a56db; border-radius: 50%; opacity: 0.8;"></div>
+                <div style="position: absolute; right: 30px; bottom: -30px; width: 80px; height: 80px; border: 12px solid #f59e0b; border-radius: 50%; opacity: 0.9;"></div>
+                
+                <h3 style="color: white; font-size: 1.3rem; margin: 0 0 8px 0; font-weight: 700; position: relative; z-index: 2;">Ujian Akhir Semester</h3>
+                <div style="font-size: 0.9rem; color: #94a3b8; position: relative; z-index: 2;">{st.session_state.nama}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 8px; border-bottom: 1px solid #e2e8f0;">
+                <div style="color: #1a56db; font-weight: 600; font-size: 0.9rem;">04 Juni 2026</div>
+                <div style="border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 8px; color: #1a56db; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    👁️ Preview
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    # Exam Actions
+    if not st.session_state.simulasi_done:
+        if st.button("Ikuti Ujian Ini", use_container_width=True, type="primary"):
+            st.session_state.simulasi_done = True
+            st.rerun()
+    else:
         if st.button("Kerjakan Ujian", use_container_width=True, type="primary"):
             st.session_state.page = "gated_rules"
             st.rerun()
-            
-        st.markdown("""
-        <div style="margin-top: 25px; margin-bottom: 15px;">
-            <span style="background: #fce8e6; color: #c5221f; padding: 6px 16px; border-radius: 30px; font-size: 0.85em; font-weight: bold;">
-                Selesai
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Second mock exam card matching "Selesai" section
-        st.markdown("""
-        <div style="
-            border: 1.5px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: white;
-            opacity: 0.75;
-        ">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 0.85em; font-weight: bold; color: #1e293b;">UAS MATEMATIKA KELAS 9</span>
-                <span style="background: #f1f3f4; color: #5f6368; padding: 4px 10px; border-radius: 30px; font-size: 0.8em; font-weight: bold;">
-                    Ujian Selesai
-                </span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("Logout", use_container_width=True):
-            st.session_state.clear()
-            st.session_state.page = "login"
-            st.rerun()
-            
-        # Mock Bottom Navigation menu matching screenshots
-        st.markdown("""
+                
+    st.markdown("</div>", unsafe_allow_html=True) # End of container
+
+    # Mock Bottom Navigation menu matching screenshots
+    st.markdown("""
         <div style="
             display: flex;
             justify-content: space-around;
@@ -830,10 +808,8 @@ elif st.session_state.page == "dashboard":
 
 # 4. Gated rules (Identification photo scan)
 elif st.session_state.page == "gated_rules":
-    col_g1, col_g2, col_g3 = st.columns([1, 2.2, 1])
-    with col_g2:
-        st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
-        st.markdown("<h2>🛡️ Validasi Identitas & Pengawasan</h2>", unsafe_allow_html=True)
+    st.markdown("<div style='max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #0f172a; font-weight: 800; font-size: 1.8rem; margin-bottom: 8px;'>🛡️ Validasi Identitas & Pengawasan</h2>", unsafe_allow_html=True)
         st.write("Silakan izinkan kamera dan ambil foto verifikasi wajah Anda sebelum membuka lembar ujian.")
         
         agree = st.checkbox("Saya setuju untuk mengikuti tata tertib pengawasan ujian akademik.",
@@ -866,7 +842,7 @@ elif st.session_state.page == "gated_rules":
             st.session_state.page = "exam"
             st.session_state.start_time = time.time()
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 # 5. Exam Page
@@ -937,49 +913,96 @@ elif st.session_state.page == "exam":
         """, unsafe_allow_html=True)
 
     # Main Question Panel (Single Column Layout matching middle screen in screenshot)
-    st.markdown("<div class='cbt-container' style='padding-top: 25px;'>", unsafe_allow_html=True)
+    st.markdown("<div style='max-width: 1080px; margin: 0 auto; padding-top: 25px;'>", unsafe_allow_html=True)
     
-    # Header title & circular green countdown timer
-    st.markdown("""
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 15px;">
-        <h2 style="color: #1e293b; font-weight: 800; font-size: 1.3em; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">UAS MATEMATIKA KELAS 9</h2>
-        <div style="
-            background: #0f9d58;
-            color: white;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85em;
-            box-shadow: 0 3px 8px rgba(15, 157, 88, 0.3);
-        ">
-            <span id="countdown">--:--</span>
+    # 2 Column layout for Exam Grid and Question
+    col_q1, col_q2 = st.columns([1, 2.5], gap="large")
+    
+    with col_q1:
+        st.markdown("""
+        <div style="background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 16px; font-size: 1.1rem;">Navigasi Soal</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+        """, unsafe_allow_html=True)
+        
+        # Grid directly in col_q1
+        for q_num in range(1, len(QUESTIONS) + 1):
+            is_current = (st.session_state.current_q == q_num)
+            is_doubt = st.session_state.doubts.get(str(q_num), False)
+            is_answered = (st.session_state.answers.get(str(q_num)) is not None)
+            
+            # Use columns to render the grid properly without creating a huge HTML string,
+            # wait, streamlit buttons inside columns are better.
+            # But grid layout in HTML with Streamlit buttons is tricky. We can use a Streamlit grid or columns.
+            pass
+            
+        # We will render the grid using Streamlit columns inside col_q1
+        for row in range(6):
+            cols = st.columns(5)
+            for col_idx in range(5):
+                q_num = row * 5 + col_idx + 1
+                if q_num > len(QUESTIONS): continue
+                with cols[col_idx]:
+                    is_current = (st.session_state.current_q == q_num)
+                    is_doubt = st.session_state.doubts.get(str(q_num), False)
+                    is_answered = (st.session_state.answers.get(str(q_num)) is not None)
+                    
+                    if is_current:
+                        label = f"👉{q_num}"
+                    elif is_doubt:
+                        label = f"🟡{q_num}"
+                    elif is_answered:
+                        label = f"🟢{q_num}"
+                    else:
+                        label = f"⚪{q_num}"
+                        
+                    if st.button(label, key=f"nav_grid_{q_num}", use_container_width=True):
+                        st.session_state.current_q = q_num
+                        st.rerun()
+                        
+        st.markdown("</div></div>", unsafe_allow_html=True)
+        
+        # Calculations
+        answered_c = len([ans for ans in st.session_state.answers.values() if ans])
+        doubt_c = len([dbt for dbt in st.session_state.doubts.values() if dbt])
+        not_answered_c = len(QUESTIONS) - answered_c
+        
+        st.markdown(f"""
+        <div style="background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0;">
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 16px; font-size: 1.1rem;">Keterangan</div>
+            <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between;"><span>🟢 Dijawab</span> <strong>{answered_c}</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>🟡 Ragu-ragu</span> <strong>{doubt_c}</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>⚪ Belum</span> <strong>{not_answered_c}</strong></div>
+            </div>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span style="font-size: 0.85em; font-weight: 600; color: #64748b;">Sisa Waktu</span>
+                <span style="font-weight: 800; color: #ef4444; background: #fee2e2; padding: 4px 12px; border-radius: 20px;" id="countdown">--:--</span>
+            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Run timer background countdown script (locates #countdown and clicks hidden expired button when done)
-    render_countdown_timer(5400) # 90 minutes
-    
-    # Category dropdown
-    st.selectbox("Kategori Ujian", options=["Kategori 1"], label_visibility="collapsed")
-    
-    q_data = QUESTIONS[st.session_state.current_q - 1]
-    q_id_str = str(q_data["id"])
-    
-    # Question header + help (?) & warning (▲) badges
-    st.markdown(f"""
-    <div style="display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1.5px solid #3b82f6; border-bottom: none; padding: 12px 20px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-top: 15px;">
-        <span style="font-weight: bold; color: #1d4ed8;">Soal No. {st.session_state.current_q} - Kategori 1</span>
-        <div style="display: flex; gap: 8px;">
-            <span style="display: inline-block; background: #eff6ff; color: #1d4ed8; width: 26px; height: 26px; border-radius: 50%; border: 1px solid #1d4ed8; text-align: center; line-height: 24px; font-weight: bold; cursor: pointer;">?</span>
-            <span style="display: inline-block; background: #fef2f2; color: #ef4444; width: 26px; height: 26px; border-radius: 50%; border: 1px solid #ef4444; text-align: center; line-height: 24px; font-weight: bold; cursor: pointer;">▲</span>
+        """, unsafe_allow_html=True)
+        render_countdown_timer(5400) # 90 minutes
+        
+        if st.button("Selesaikan Ujian", type="primary", use_container_width=True):
+            submit_exam_results(is_forced=False)
+            
+    with col_q2:
+        q_data = QUESTIONS[st.session_state.current_q - 1]
+        q_id_str = str(q_data["id"])
+        
+        # Question header
+        st.markdown(f"""
+        <div style="background: white; border: 1px solid #e2e8f0; padding: 24px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #0f172a; font-weight: 800; font-size: 1.4rem;">Pertanyaan {st.session_state.current_q}/{len(QUESTIONS)}</h2>
+                <div style="background: #f1f5f9; color: #64748b; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">Pilihan Ganda</div>
+            </div>
+            <div style="font-size: 1.1rem; line-height: 1.7; color: #1e293b; margin-bottom: 24px;">
+                {q_data["text"]}
+            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     # Question body text card
     st.markdown(f"""
@@ -1009,68 +1032,30 @@ elif st.session_state.page == "exam":
         st.session_state.answers[q_id_str] = opt_key
         st.session_state.doubts[q_id_str] = False
         
-    # Doubt Checkbox
-    is_current_doubt = st.session_state.doubts.get(q_id_str, False)
-    st.write("")
-    doubt_check = st.checkbox("Tandai Ragu-Ragu", value=is_current_doubt)
-    st.session_state.doubts[q_id_str] = doubt_check
-    
-    # Summary Status Badges (At bottom of question pane)
-    st.markdown("---")
-    
-    # Calculations
-    answered_c = len([ans for ans in st.session_state.answers.values() if ans])
-    doubt_c = len([dbt for dbt in st.session_state.doubts.values() if dbt])
-    not_answered_c = len(QUESTIONS) - answered_c
-    
-    col_st1, col_st2, col_st3, col_st4 = st.columns(4)
-    with col_st1:
-        st.markdown(f"""
-        <div style="background:#eff6ff; border: 1.5px solid #1d4ed8; color:#1d4ed8; font-weight:bold; border-radius:4px; padding: 10px; text-align:center;">
-            <span style="font-size:1.15em;">1</span><br><span style="font-size:0.8em; font-weight:normal; color:#475569;">Soal Dibuka</span>
-        </div>
-        """, unsafe_allow_html=True)
-    with col_st2:
-        st.markdown(f"""
-        <div style="background:#f0fdf4; border: 1.5px solid #10b981; color:#10b981; font-weight:bold; border-radius:4px; padding: 10px; text-align:center;">
-            <span style="font-size:1.15em;">{answered_c}</span><br><span style="font-size:0.8em; font-weight:normal; color:#475569;">Dijawab</span>
-        </div>
-        """, unsafe_allow_html=True)
-    with col_st3:
-        st.markdown(f"""
-        <div style="background:#fffbeb; border: 1.5px solid #f59e0b; color:#f59e0b; font-weight:bold; border-radius:4px; padding: 10px; text-align:center;">
-            <span style="font-size:1.15em;">{doubt_c}</span><br><span style="font-size:0.8em; font-weight:normal; color:#475569;">Ragu-Ragu</span>
-        </div>
-        """, unsafe_allow_html=True)
-    with col_st4:
-        st.markdown(f"""
-        <div style="background:#f8fafc; border: 1.5px solid #cbd5e1; color:#3b82f6; font-weight:bold; border-radius:4px; padding: 10px; text-align:center;">
-            <span style="font-size:1.15em;">{not_answered_c}</span><br><span style="font-size:0.8em; font-weight:normal; color:#475569;">Belum Dijawab</span>
-        </div>
-        """, unsafe_allow_html=True)
         
-    # Bottom Navigation action bar with Arrow layout matching the mockup
-    st.write("")
-    nav_col1, nav_col2, nav_col3 = st.columns([1, 1.2, 1])
+    # We removed the generic checkbox because we use the "Tandai Soal" button below
+    
+    # Empty section since summary badges are now in the left column        
+    # Bottom Navigation action bar with layout matching the mockup
+    st.markdown("<hr style='border: none; border-top: 1px solid #e2e8f0; margin: 30px 0 20px 0;'>", unsafe_allow_html=True)
+    nav_col1, nav_col2, nav_col3 = st.columns([1, 1, 1])
     with nav_col1:
-        if st.button("◀", key="prev_btn", use_container_width=True, disabled=(st.session_state.current_q == 1)):
+        if st.button("← Sebelumnya", key="prev_btn", use_container_width=True, disabled=(st.session_state.current_q == 1)):
             st.session_state.current_q -= 1
             st.rerun()
     with nav_col2:
-        # Dropdown paging select
-        selected_page_num = st.selectbox(
-            "Paging",
-            options=list(range(1, len(QUESTIONS) + 1)),
-            index=(st.session_state.current_q - 1),
-            format_func=lambda num: f"{num} / {len(QUESTIONS)}",
-            label_visibility="collapsed"
-        )
-        if selected_page_num != st.session_state.current_q:
-            st.session_state.current_q = selected_page_num
+        # We handle doubt marking differently now
+        # Streamlit doesn't easily let us change the button style based on session state on the fly without custom components,
+        # but we can use a regular button to toggle
+        is_current_doubt = st.session_state.doubts.get(q_id_str, False)
+        doubt_label = "Unmark Ragu" if is_current_doubt else "Tandai Soal"
+        if st.button(doubt_label, key="doubt_btn_toggle", use_container_width=True):
+            st.session_state.doubts[q_id_str] = not is_current_doubt
             st.rerun()
+            
     with nav_col3:
         if st.session_state.current_q < len(QUESTIONS):
-            if st.button("▶", key="next_btn", use_container_width=True, type="primary"):
+            if st.button("Selanjutnya →", key="next_btn", use_container_width=True, type="primary"):
                 st.session_state.current_q += 1
                 st.rerun()
         else:

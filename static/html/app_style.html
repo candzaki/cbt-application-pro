@@ -23,7 +23,10 @@
     }
 
     html, body, [data-testid="stAppViewContainer"] {
-        background: #f8fafc !important; /* Light background */
+        /* Subtle grid background for Kampus Inovatif theme */
+        background-color: #f0f4f8 !important;
+        background-image: radial-gradient(#cbd5e1 1px, transparent 0) !important;
+        background-size: 30px 30px !important;
     }
 
     [data-testid="block-container"] {
@@ -45,7 +48,7 @@
         color: #64748b !important;
     }
     [data-testid="stSidebar"] * {
-        color: #1e293b !important; /* Dark text for sidebar */
+        color: #1e293b !important;
     }
 
     /* ===== CBT CONTAINER — Main Card ===== */
@@ -56,7 +59,7 @@
         padding: 36px !important;
         margin-top: 8px !important;
         margin-bottom: 16px !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
         color: #1e293b !important;
     }
 
@@ -124,37 +127,85 @@
         color: #94a3b8 !important;
     }
 
+    /* ===== RADIO BUTTONS (Exam Options) ===== */
+    div[data-testid="stRadio"] > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    div[data-testid="stRadio"] label {
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+    }
+    div[data-testid="stRadio"] label:hover {
+        border-color: #bfdbfe !important;
+        background: #f8fafc !important;
+    }
+    /* When a radio is selected, Streamlit adds 'data-checked="true"' to an inner div. 
+       We use the :has pseudo-class to style the parent label when the inner input is checked */
+    div[data-testid="stRadio"] label:has(input:checked) {
+        border-color: #1a56db !important;
+        background: #eff6ff !important;
+        box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1) !important;
+    }
+    div[data-testid="stRadio"] label div p {
+        color: #1e293b !important;
+        font-weight: 600 !important;
+        font-size: 1.05rem !important;
+        margin: 0 !important;
+    }
+    div[data-testid="stRadio"] label:has(input:checked) div p {
+        color: #1d4ed8 !important;
+    }
+
     /* ===== BUTTONS ===== */
     button[kind="primary"],
     div[data-testid="stButton"] > button[kind="primary"] {
-        background: #1a56db !important;
+        background: #f59e0b !important; /* Kampus Inovatif Yellow Primary */
         color: white !important;
         border-radius: 12px !important;
         padding: 12px 24px !important;
         font-weight: 700 !important;
         font-size: 0.95rem !important;
         border: none !important;
-        box-shadow: 0 4px 6px rgba(26, 86, 219, 0.2) !important;
+        box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2) !important;
         transition: all 0.2s !important;
     }
     button[kind="primary"]:hover {
-        background: #1e40af !important;
+        background: #d97706 !important;
         transform: translateY(-1px) !important;
     }
     button[kind="secondary"],
     div[data-testid="stButton"] > button[kind="secondary"] {
         background: #ffffff !important;
-        border: 1.5px solid #e2e8f0 !important;
+        border: 1.5px solid #1a56db !important; /* Blue outline for secondary */
         border-radius: 12px !important;
-        color: #64748b !important;
+        color: #1a56db !important;
         padding: 10px 24px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         transition: all 0.2s !important;
     }
     button[kind="secondary"]:hover {
-        border-color: #1a56db !important;
-        color: #1a56db !important;
         background: #eff6ff !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Override the specific "Tandai Soal" button color if needed */
+    div[data-testid="stButton"] button:has(div:contains("Tandai Soal")),
+    div[data-testid="stButton"] button:has(div:contains("Unmark Ragu")) {
+        border-color: #f59e0b !important;
+        color: #f59e0b !important;
+    }
+    div[data-testid="stButton"] button:has(div:contains("Tandai Soal")):hover,
+    div[data-testid="stButton"] button:has(div:contains("Unmark Ragu")):hover {
+        background: #fffbeb !important;
     }
 
     /* ===== CHECKBOX ===== */
@@ -206,24 +257,28 @@
         font-weight: 700 !important;
     }
 
-    /* ===== SIDEBAR BUTTON GRID (exam navigation) ===== */
-    [data-testid="stSidebar"] [data-testid="stButton"] button {
+    /* ===== GRID BUTTONS (exam navigation left panel) ===== */
+    /* Target the columns holding the grid buttons */
+    div[data-testid="column"] div[data-testid="stButton"] button {
         background: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
         border-radius: 8px !important;
         color: #64748b !important;
-        font-weight: 600 !important;
-        font-size: 0.9rem !important;
-        padding: 8px 4px !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        padding: 12px 4px !important;
+        width: 100% !important;
         transition: all 0.2s !important;
     }
-    [data-testid="stSidebar"] [data-testid="stButton"] button:hover {
+    div[data-testid="column"] div[data-testid="stButton"] button:hover {
         border-color: #1a56db !important;
         color: #1a56db !important;
+        background: #eff6ff !important;
     }
+    /* Active/Answered state logic is handled by text emoji in python, but we can do basic style */
 
     /* ===== CUSTOM SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
         background: #cbd5e1;

@@ -1,9 +1,33 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&display=swap');
 
-    /* Force Plus Jakarta Sans font globally across all elements */
+    /* ===== HIDE STREAMLIT DEFAULT HEADER TOOLBAR ===== */
+    /* Hides the hamburger menu, light/dark mode toggle, and deploy button */
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    header[data-testid="stHeader"],
+    .stDeployButton,
+    #MainMenu,
+    footer {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+    }
+    /* Hide the top-right action buttons (light_mode / dark_mode icons) */
+    [data-testid="stHeaderActionElements"] {
+        display: none !important;
+    }
+    button[title="View app in fullscreen"],
+    button[aria-label="Open settings"],
+    button[data-testid="baseButton-headerNoPadding"] {
+        display: none !important;
+    }
+
+    /* Force League Spartan font globally across all elements */
     * {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        font-family: 'League Spartan', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     }
     
     html, body, [data-testid="stAppViewContainer"] {

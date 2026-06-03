@@ -368,9 +368,22 @@ def load_db():
     with _db_lock:
         fdb = init_firebase()
         default_data = {"users": {}, "results": {}, "cheats": []}
+        
+        # 1. Jika Firebase tidak ada/gagal, gunakan database lokal (database.json)
         if fdb is None:
+            if os.path.exists(DB_FILE):
+                try:
+                    with open(DB_FILE, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        if "users" not in data: data["users"] = {}
+                        if "results" not in data: data["results"] = {}
+                        if "cheats" not in data: data["cheats"] = []
+                        return data
+                except Exception as e:
+                    print(f"Error reading local database.json: {e}")
             return default_data
             
+        # 2. Jika Firebase berhasil, gunakan Firestore
         try:
             doc_ref = fdb.collection('cbt_exam_pro').document('database')
             doc = doc_ref.get()
@@ -389,14 +402,21 @@ def load_db():
 def save_db(data):
     with _db_lock:
         fdb = init_firebase()
-        if fdb is None:
-            return
-            
+        
+        # 1. Simpan ke lokal (sebagai backup utama atau fallback)
         try:
-            doc_ref = fdb.collection('cbt_exam_pro').document('database')
-            doc_ref.set(data)
+            with open(DB_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=4)
         except Exception as e:
-            print(f"Error saving to Firestore: {e}")
+            print(f"Error saving to local database.json: {e}")
+            
+        # 2. Simpan ke Firebase (hanya jika terkoneksi)
+        if fdb is not None:
+            try:
+                doc_ref = fdb.collection('cbt_exam_pro').document('database')
+                doc_ref.set(data)
+            except Exception as e:
+                print(f"Error saving to Firestore: {e}")
 
 # Initialize session state variables
 if "page" not in st.session_state:

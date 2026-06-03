@@ -445,8 +445,9 @@ if "simulasi_done" not in st.session_state:
 if "theme" not in st.session_state:
     st.session_state.theme = "light"
 
-with st.sidebar:
-    # Theme switch as an icon only, no panel
+# Global Theme Toggle (Top Right Corner, NO Sidebar)
+col_space, col_theme = st.columns([15, 1])
+with col_theme:
     theme_icon = "☀️" if st.session_state.theme == "dark" else "🌙"
     if st.button(theme_icon, key="theme_toggle_btn", help="Ubah Tema (Terang/Gelap)"):
         st.session_state.theme = "light" if st.session_state.theme == "dark" else "dark"

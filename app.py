@@ -706,72 +706,72 @@ elif st.session_state.page == "dashboard":
     
     # Header profile
     st.markdown(f"""
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
-            <div>
-                <h1 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin: 0;">Beranda</h1>
-                <div style="color: #64748b; font-size: 0.85rem;">Menu / Beranda</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <span style="color: #94a3b8; font-size: 1.2rem;">🔔</span>
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" 
-                     style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
-                <div>
-                    <div style="font-weight: 700; color: #1e293b; font-size: 0.95em;">{st.session_state.nama}</div>
-                    <div style="color: #64748b; font-size: 0.8em; font-weight: 500;">Mahasiswa</div>
-                </div>
-            </div>
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin: 0;">Beranda</h1>
+        <div style="color: #64748b; font-size: 0.85rem;">Menu / Beranda</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="color: #94a3b8; font-size: 1.2rem;">🔔</span>
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" 
+             style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+        <div>
+            <div style="font-weight: 700; color: #1e293b; font-size: 0.95em;">{st.session_state.nama}</div>
+            <div style="color: #64748b; font-size: 0.8em; font-weight: 500;">Mahasiswa</div>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+</div>
+""", unsafe_allow_html=True)
         
     # Metrics Cards
     st.markdown("""
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
-            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                <div style="background: #dcfce7; color: #16a34a; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">✅</div>
-                <div>
-                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Total Ujian</div>
-                    <div style="color: #16a34a; font-weight: 800; font-size: 1.5rem;">20 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
-                </div>
-            </div>
-            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                <div style="background: #fef3c7; color: #d97706; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📄</div>
-                <div>
-                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Diambil</div>
-                    <div style="color: #d97706; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
-                </div>
-            </div>
-            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                <div style="background: #fee2e2; color: #dc2626; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📚</div>
-                <div>
-                    <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Tersisa</div>
-                    <div style="color: #dc2626; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
-                </div>
-            </div>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div style="background: #dcfce7; color: #16a34a; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">✅</div>
+        <div>
+            <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Total Ujian</div>
+            <div style="color: #16a34a; font-weight: 800; font-size: 1.5rem;">20 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div style="background: #fef3c7; color: #d97706; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📄</div>
+        <div>
+            <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Diambil</div>
+            <div style="color: #d97706; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
+        </div>
+    </div>
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <div style="background: #fee2e2; color: #dc2626; width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📚</div>
+        <div>
+            <div style="color: #0f172a; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">Ujian Tersisa</div>
+            <div style="color: #dc2626; font-weight: 800; font-size: 1.5rem;">10 <span style="font-size: 0.5em; color: #64748b;">Ujian</span></div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
         
     st.markdown("<h3 style='color: #1e293b; font-size: 1.2em; font-weight: 700; margin-bottom: 20px;'>Ujian Mendatang</h3>", unsafe_allow_html=True)
         
     # Stylized Exam Card (Kampus Inovatif Style)
     st.markdown(f"""
-        <div style="margin-bottom: 24px;">
-            <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 8px;">KIMIA DASAR TA 24</div>
-            <div style="background: #1e293b; border-radius: 16px; overflow: hidden; position: relative; padding: 24px; color: white;">
-                <!-- Decorative rings -->
-                <div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border: 15px solid #1a56db; border-radius: 50%; opacity: 0.8;"></div>
-                <div style="position: absolute; right: 30px; bottom: -30px; width: 80px; height: 80px; border: 12px solid #f59e0b; border-radius: 50%; opacity: 0.9;"></div>
-                
-                <h3 style="color: white; font-size: 1.3rem; margin: 0 0 8px 0; font-weight: 700; position: relative; z-index: 2;">Ujian Akhir Semester</h3>
-                <div style="font-size: 0.9rem; color: #94a3b8; position: relative; z-index: 2;">{st.session_state.nama}</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 8px; border-bottom: 1px solid #e2e8f0;">
-                <div style="color: #1a56db; font-weight: 600; font-size: 0.9rem;">04 Juni 2026</div>
-                <div style="border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 8px; color: #1a56db; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                    👁️ Preview
-                </div>
-            </div>
+<div style="margin-bottom: 24px;">
+    <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; margin-bottom: 8px;">KIMIA DASAR TA 24</div>
+    <div style="background: #1e293b; border-radius: 16px; overflow: hidden; position: relative; padding: 24px; color: white;">
+        <!-- Decorative rings -->
+        <div style="position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border: 15px solid #1a56db; border-radius: 50%; opacity: 0.8;"></div>
+        <div style="position: absolute; right: 30px; bottom: -30px; width: 80px; height: 80px; border: 12px solid #f59e0b; border-radius: 50%; opacity: 0.9;"></div>
+        
+        <h3 style="color: white; font-size: 1.3rem; margin: 0 0 8px 0; font-weight: 700; position: relative; z-index: 2;">Ujian Akhir Semester</h3>
+        <div style="font-size: 0.9rem; color: #94a3b8; position: relative; z-index: 2;">{st.session_state.nama}</div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 8px; border-bottom: 1px solid #e2e8f0;">
+        <div style="color: #1a56db; font-weight: 600; font-size: 0.9rem;">04 Juni 2026</div>
+        <div style="border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 8px; color: #1a56db; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            👁️ Preview
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+</div>
+""", unsafe_allow_html=True)
         
     # Exam Actions
     if not st.session_state.simulasi_done:

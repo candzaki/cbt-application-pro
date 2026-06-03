@@ -444,23 +444,13 @@ if "simulasi_done" not in st.session_state:
 if "theme" not in st.session_state:
     st.session_state.theme = "light"
 
-# Global Sidebar Theme Panel
+# Global Sidebar Theme Toggle (Compact)
 with st.sidebar:
-    st.markdown("### 🎨 Pengaturan Tema")
-    # Using segmented control or radio for theme selection
-    theme_selection = st.radio(
-        "Pilih Tema Tampilan:",
-        options=["☀️ Light Theme", "🌙 Dark Theme"],
-        index=0 if st.session_state.theme == "light" else 1,
-        horizontal=True,
-        label_visibility="collapsed"
-    )
-    
-    new_theme = "light" if "Light" in theme_selection else "dark"
+    is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme == "dark"))
+    new_theme = "dark" if is_dark else "light"
     if new_theme != st.session_state.theme:
         st.session_state.theme = new_theme
         st.rerun()
-    st.markdown("---")
 
 
 # Captcha generation

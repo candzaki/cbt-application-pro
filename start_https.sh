@@ -123,10 +123,11 @@ if [ -z "$HTTPS_URL" ]; then
     ssh -o StrictHostKeyChecking=no -p 443 -R 0:localhost:$PORT qr@a.pinggy.io > "$TUNNEL_LOG" 2>&1 &
     TUNNEL_PID=$!
     
-    MAX_WAIT=8
+    MAX_WAIT=18
     ELAPSED=0
     while [ $ELAPSED -lt $MAX_WAIT ]; do
-        HTTPS_URL=$(grep -o 'https://[a-z0-9-]*\.pinggy\.link' "$TUNNEL_LOG" 2>/dev/null | head -1)
+        # Match both *.pinggy.link and *.run.pinggy-free.link
+        HTTPS_URL=$(grep -oE 'https://[a-zA-Z0-9_-]+(\.run)?\.(pinggy-free\.link|pinggy\.link)' "$TUNNEL_LOG" 2>/dev/null | head -1)
         if [ -n "$HTTPS_URL" ]; then
             PROVIDER="Pinggy.io"
             break

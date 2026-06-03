@@ -1,0 +1,290 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    /* ===== HIDE ALL STREAMLIT DEFAULT UI ===== */
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    [data-testid="stHeaderActionElements"],
+    header[data-testid="stHeader"],
+    .stDeployButton,
+    #MainMenu,
+    footer {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+    }
+
+    /* ===== GLOBAL RESET ===== */
+    * {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        box-sizing: border-box;
+    }
+
+    html, body, [data-testid="stAppViewContainer"] {
+        /* Subtle grid background for Dark theme */
+        background-color: #0f172a !important;
+        background-image: radial-gradient(#334155 1px, transparent 0) !important;
+        background-size: 30px 30px !important;
+        color: #f8fafc !important;
+    }
+
+    [data-testid="block-container"] {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        max-width: 1080px !important;
+    }
+
+    /* ===== SIDEBAR STYLING ===== */
+    [data-testid="stSidebar"] {
+        background: #1e293b !important;
+        border-right: 1px solid #334155 !important;
+    }
+    [data-testid="stSidebarCollapseButton"] {
+        background: #334155 !important;
+        border-radius: 10px !important;
+        color: #94a3b8 !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #f8fafc !important;
+    }
+
+    /* ===== CBT CONTAINER — Main Card ===== */
+    .cbt-container {
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 20px !important;
+        padding: 36px !important;
+        margin-top: 8px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        color: #f8fafc !important;
+    }
+
+    /* ===== TEXT OVERRIDES ===== */
+    .cbt-container h1,
+    .cbt-container h2,
+    .cbt-container h3 {
+        color: #ffffff !important;
+        font-weight: 800 !important;
+    }
+    .cbt-container p,
+    .cbt-container label,
+    .cbt-container span {
+        color: #94a3b8 !important;
+    }
+
+    /* ===== HEADER BANNER (Login/Register) ===== */
+    .cbt-logo-wrap {
+        text-align: center !important;
+        margin-bottom: 12px !important;
+    }
+    .cbt-logo-wrap img {
+        width: 120px !important;
+        height: auto !important;
+        object-fit: contain !important;
+    }
+    .cbt-title {
+        text-align: center !important;
+        color: #ffffff !important;
+        font-size: 1.75rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 4px !important;
+    }
+    .cbt-subtitle {
+        text-align: center !important;
+        color: #94a3b8 !important;
+        font-size: 0.95rem !important;
+        margin-bottom: 32px !important;
+    }
+
+    /* ===== INPUT FIELDS ===== */
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stTextInput"] input:focus {
+        background: #0f172a !important;
+        border: 1.5px solid #334155 !important;
+        border-radius: 12px !important;
+        color: #f8fafc !important;
+        padding: 12px 16px !important;
+        font-size: 0.95rem !important;
+        transition: all 0.2s !important;
+        box-shadow: none !important;
+    }
+    div[data-testid="stTextInput"] input:focus {
+        border-color: #3b82f6 !important;
+        background: #1e293b !important;
+        box-shadow: 0 0 0 4px #1e3a8a !important;
+    }
+    div[data-testid="stTextInput"] label {
+        color: #f8fafc !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 6px !important;
+    }
+    div[data-testid="stTextInput"] input::placeholder {
+        color: #64748b !important;
+    }
+
+    /* ===== RADIO BUTTONS (Exam Options) ===== */
+    div[data-testid="stRadio"] > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    div[data-testid="stRadio"] label {
+        background: #1e293b !important;
+        border: 1.5px solid #334155 !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+    }
+    div[data-testid="stRadio"] label:hover {
+        border-color: #3b82f6 !important;
+        background: #0f172a !important;
+    }
+    /* When a radio is selected, Streamlit adds 'data-checked="true"' to an inner div. 
+       We use the :has pseudo-class to style the parent label when the inner input is checked */
+    div[data-testid="stRadio"] label:has(input:checked) {
+        border-color: #3b82f6 !important;
+        background: #1e3a8a !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+    }
+    div[data-testid="stRadio"] label div p {
+        color: #f8fafc !important;
+        font-weight: 600 !important;
+        font-size: 1.05rem !important;
+        margin: 0 !important;
+    }
+    div[data-testid="stRadio"] label:has(input:checked) div p {
+        color: #60a5fa !important;
+    }
+
+    /* ===== BUTTONS ===== */
+    button[kind="primary"],
+    div[data-testid="stButton"] > button[kind="primary"] {
+        background: #f59e0b !important; /* Kampus Inovatif Yellow Primary */
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 12px 24px !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        border: none !important;
+        box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2) !important;
+        transition: all 0.2s !important;
+    }
+    button[kind="primary"]:hover {
+        background: #d97706 !important;
+        transform: translateY(-1px) !important;
+    }
+    button[kind="secondary"],
+    div[data-testid="stButton"] > button[kind="secondary"] {
+        background: #1e293b !important;
+        border: 1.5px solid #3b82f6 !important; /* Blue outline for secondary */
+        border-radius: 12px !important;
+        color: #60a5fa !important;
+        padding: 10px 24px !important;
+        font-weight: 700 !important;
+        transition: all 0.2s !important;
+    }
+    button[kind="secondary"]:hover {
+        background: #1e3a8a !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Override the specific "Tandai Soal" button color if needed */
+    div[data-testid="stButton"] button:has(div:contains("Tandai Soal")),
+    div[data-testid="stButton"] button:has(div:contains("Unmark Ragu")) {
+        border-color: #f59e0b !important;
+        color: #fcd34d !important;
+    }
+    div[data-testid="stButton"] button:has(div:contains("Tandai Soal")):hover,
+    div[data-testid="stButton"] button:has(div:contains("Unmark Ragu")):hover {
+        background: #78350f !important;
+    }
+
+    /* ===== CHECKBOX ===== */
+    div[data-testid="stCheckbox"] label {
+        color: #94a3b8 !important;
+        font-weight: 500 !important;
+    }
+    div[data-testid="stCheckbox"] label:has(input:checked) {
+        color: #f8fafc !important;
+        font-weight: 700 !important;
+    }
+
+    /* ===== ALERTS / INFO BOX ===== */
+    div[data-testid="stAlert"],
+    div[data-testid="stSuccess"],
+    div[data-testid="stWarning"],
+    div[data-testid="stError"],
+    div[data-testid="stInfo"] {
+        border-radius: 12px !important;
+        border-width: 1px !important;
+        font-weight: 600 !important;
+    }
+    div[data-testid="stSuccess"] {
+        background: #14532d !important;
+        border-color: #166534 !important;
+        color: #4ade80 !important;
+    }
+    div[data-testid="stWarning"] {
+        background: #713f12 !important;
+        border-color: #854d0e !important;
+        color: #facc15 !important;
+    }
+    div[data-testid="stError"] {
+        background: #7f1d1d !important;
+        border-color: #991b1b !important;
+        color: #f87171 !important;
+    }
+
+    /* ===== CAMERA INPUT ===== */
+    div[data-testid="stCameraInput"] {
+        border-radius: 16px !important;
+        overflow: hidden !important;
+        border: 1.5px solid #334155 !important;
+    }
+    div[data-testid="stCameraInput"] button {
+        background: #3b82f6 !important;
+        border-radius: 10px !important;
+        color: white !important;
+        font-weight: 700 !important;
+    }
+
+    /* ===== GRID BUTTONS (exam navigation left panel) ===== */
+    /* Target the columns holding the grid buttons */
+    div[data-testid="column"] div[data-testid="stButton"] button {
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        color: #94a3b8 !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        padding: 12px 4px !important;
+        width: 100% !important;
+        transition: all 0.2s !important;
+    }
+    div[data-testid="column"] div[data-testid="stButton"] button:hover {
+        border-color: #3b82f6 !important;
+        color: #60a5fa !important;
+        background: #1e3a8a !important;
+    }
+
+    /* ===== CUSTOM SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+    }
+</style>

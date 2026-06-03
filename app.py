@@ -441,6 +441,17 @@ if "photo_captured" not in st.session_state:
     st.session_state.photo_captured = None
 if "simulasi_done" not in st.session_state:
     st.session_state.simulasi_done = False
+if "theme" not in st.session_state:
+    st.session_state.theme = "light"
+
+# Global Sidebar settings (available on all pages)
+with st.sidebar:
+    is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme == "dark"))
+    new_theme = "dark" if is_dark else "light"
+    if new_theme != st.session_state.theme:
+        st.session_state.theme = new_theme
+        st.rerun()
+
 
 # Captcha generation
 if "captcha_val" not in st.session_state:
@@ -452,7 +463,8 @@ if "captcha_val" not in st.session_state:
 # Inject Modern CSS Styling & Zero-Gravity Interactive Canvas Background
 def render_professional_background():
     # Make Streamlit containers transparent to show the interactive canvas behind them
-    with open("static/html/app_style.html", "r", encoding="utf-8") as f:
+    css_file = "static/html/app_style_dark.html" if st.session_state.theme == "dark" else "static/html/app_style.html"
+    with open(css_file, "r", encoding="utf-8") as f:
         st.markdown(f.read(), unsafe_allow_html=True)
     
     # JavaScript payload for zero-gravity constellation background following cursor

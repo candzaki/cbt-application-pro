@@ -874,30 +874,7 @@ elif st.session_state.page == "exam":
     
     st.sidebar.markdown("---")
     
-    # Sidebar question grid map
-    st.sidebar.markdown("### 🗺️ Peta Navigasi Soal")
-    for row in range(6):
-        cols = st.sidebar.columns(5)
-        for col_idx in range(5):
-            q_num = row * 5 + col_idx + 1
-            with cols[col_idx]:
-                is_current = (st.session_state.current_q == q_num)
-                is_doubt = st.session_state.doubts.get(str(q_num), False)
-                is_answered = (st.session_state.answers.get(str(q_num)) is not None)
-                
-                if is_current:
-                    label = f"👉{q_num}"
-                elif is_doubt:
-                    label = f"🟡{q_num}"
-                elif is_answered:
-                    label = f"🟢{q_num}"
-                else:
-                    label = f"⚪{q_num}"
-                    
-                if st.button(label, key=f"nav_grid_{q_num}", use_container_width=True):
-                    st.session_state.current_q = q_num
-                    st.rerun()
-                    
+    # (Peta Navigasi Soal removed from sidebar as it is now in the main left column)
     # Hidden controls
     st.markdown("<div class='hidden-btn-container'>", unsafe_allow_html=True)
     if st.button("__TRIGGER_STRIKE__", key="trigger_strike_btn"):

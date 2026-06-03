@@ -445,12 +445,11 @@ if "simulasi_done" not in st.session_state:
 if "theme" not in st.session_state:
     st.session_state.theme = "light"
 
-# Global Sidebar Theme Toggle (Compact)
+# Global Sidebar Theme Toggle (Icon Only)
 with st.sidebar:
-    is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme == "dark"))
-    new_theme = "dark" if is_dark else "light"
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
+    theme_icon = "☀️" if st.session_state.theme == "dark" else "🌙"
+    if st.button(theme_icon, key="theme_toggle_btn", help="Ubah Tema"):
+        st.session_state.theme = "light" if st.session_state.theme == "dark" else "dark"
         st.rerun()
 
 

@@ -561,11 +561,10 @@ if st.session_state.page == "login":
         # Curve banner header
         logo_url = get_logo_base64()
         st.markdown("""
-        <div class="cbt-banner"></div>
         <div class="cbt-logo-wrap">
             <img src="{logo_url}">
         </div>
-        <div class="cbt-title">CBT APPLICATION</div>
+        <div class="cbt-title">Kampus Inovatif CBT</div>
         <div class="cbt-subtitle">Selamat datang! Silakan masuk dengan NIM & kata sandi Anda.</div>
         """.format(logo_url=logo_url), unsafe_allow_html=True)
         
@@ -626,9 +625,8 @@ elif st.session_state.page == "register":
     with col_r2:
         st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
         st.markdown("""
-            <div class="cbt-banner"></div>
-            <div class="cbt-logo-wrap" style="margin-top:-52px;">
-                <span style="display:inline-flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);font-size:2.5rem;border:3px solid rgba(99,102,241,0.5);box-shadow:0 0 0 6px rgba(99,102,241,0.1);">📝</span>
+            <div class="cbt-logo-wrap" style="margin-top: 10px;">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:16px;background:#eff6ff;color:#1a56db;font-size:2.5rem;border:1px solid #bfdbfe;">📝</span>
             </div>
             <div class="cbt-title">Pendaftaran Akun</div>
             <div class="cbt-subtitle">Buat profil baru untuk mengikuti ujian CBT</div>
@@ -671,13 +669,13 @@ elif st.session_state.page == "dashboard":
         st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
         # Header profile
         st.markdown(f"""
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
-            <div style="display: flex; align-items: center; gap: 15px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
                 <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" 
-                     style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid #cbd5e1; object-fit: cover;">
+                     style="width: 54px; height: 54px; border-radius: 50%; object-fit: cover;">
                 <div>
-                    <div style="color: #64748b; font-size: 0.85em;">Selamat Datang 👋</div>
-                    <div style="font-weight: bold; color: #1e293b; font-size: 1.15em;">{st.session_state.nama}</div>
+                    <div style="color: var(--text-muted); font-size: 0.85em; font-weight: 500;">Mahasiswa</div>
+                    <div style="font-weight: 700; color: var(--text); font-size: 1.2em;">{st.session_state.nama}</div>
                 </div>
             </div>
             <div style="font-size: 1.3em; cursor: pointer; color: #64748b; position: relative;">

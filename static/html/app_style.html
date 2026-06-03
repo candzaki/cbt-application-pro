@@ -1,5 +1,5 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
     /* ===== HIDE ALL STREAMLIT DEFAULT UI ===== */
     [data-testid="stHeader"],
@@ -18,12 +18,12 @@
 
     /* ===== GLOBAL RESET ===== */
     * {
-        font-family: 'League Spartan', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
         box-sizing: border-box;
     }
 
     html, body, [data-testid="stAppViewContainer"] {
-        background: transparent !important;
+        background: #f8fafc !important; /* Light background */
     }
 
     [data-testid="block-container"] {
@@ -36,217 +36,135 @@
 
     /* ===== SIDEBAR STYLING ===== */
     [data-testid="stSidebar"] {
-        background: rgba(10, 12, 28, 0.92) !important;
-        border-right: 1px solid rgba(99, 102, 241, 0.15) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
+        background: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
     }
     [data-testid="stSidebarCollapseButton"] {
-        background: rgba(99, 102, 241, 0.1) !important;
+        background: #f1f5f9 !important;
         border-radius: 10px !important;
+        color: #64748b !important;
     }
     [data-testid="stSidebar"] * {
-        color: #e2e8f0 !important;
+        color: #1e293b !important; /* Dark text for sidebar */
     }
 
     /* ===== CBT CONTAINER — Main Card ===== */
     .cbt-container {
-        background: rgba(13, 16, 38, 0.75) !important;
-        border: 1px solid rgba(99, 102, 241, 0.2) !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
         border-radius: 20px !important;
         padding: 36px !important;
         margin-top: 8px !important;
         margin-bottom: 16px !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(99,102,241,0.08) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        color: #e2e8f0 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        color: #1e293b !important;
     }
 
     /* ===== TEXT OVERRIDES ===== */
     .cbt-container h1,
     .cbt-container h2,
     .cbt-container h3 {
-        color: #f1f5f9 !important;
+        color: #0f172a !important;
         font-weight: 800 !important;
-        letter-spacing: -0.02em !important;
     }
     .cbt-container p,
     .cbt-container label,
     .cbt-container span {
-        color: #94a3b8 !important;
+        color: #64748b !important;
     }
 
     /* ===== HEADER BANNER (Login/Register) ===== */
-    .cbt-banner {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #6366f1 100%) !important;
-        height: 110px !important;
-        border-top-left-radius: 20px !important;
-        border-top-right-radius: 20px !important;
-        border-bottom-left-radius: 60% 20px !important;
-        border-bottom-right-radius: 60% 20px !important;
-        margin: -36px -36px 20px -36px !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    .cbt-banner::before {
-        content: '';
-        position: absolute;
-        top: -40%;
-        right: -10%;
-        width: 200px;
-        height: 200px;
-        background: rgba(255,255,255,0.06);
-        border-radius: 50%;
-    }
-    .cbt-banner::after {
-        content: '';
-        position: absolute;
-        bottom: -20%;
-        left: 10%;
-        width: 120px;
-        height: 120px;
-        background: rgba(255,255,255,0.04);
-        border-radius: 50%;
-    }
     .cbt-logo-wrap {
         text-align: center !important;
-        margin-top: -55px !important;
         margin-bottom: 12px !important;
-        position: relative !important;
-        z-index: 10 !important;
     }
     .cbt-logo-wrap img {
-        width: 90px !important;
-        height: 90px !important;
-        border-radius: 50% !important;
-        border: 3px solid rgba(99, 102, 241, 0.5) !important;
-        box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.1), 0 8px 20px rgba(0,0,0,0.4) !important;
-        background: #0d1026 !important;
+        width: 120px !important;
+        height: auto !important;
         object-fit: contain !important;
-        padding: 8px !important;
     }
     .cbt-title {
         text-align: center !important;
-        color: #f1f5f9 !important;
-        font-size: 1.5rem !important;
+        color: #0f172a !important;
+        font-size: 1.75rem !important;
         font-weight: 800 !important;
-        letter-spacing: -0.02em !important;
         margin-bottom: 4px !important;
     }
     .cbt-subtitle {
         text-align: center !important;
         color: #64748b !important;
-        font-size: 0.88rem !important;
-        margin-bottom: 28px !important;
+        font-size: 0.95rem !important;
+        margin-bottom: 32px !important;
     }
 
     /* ===== INPUT FIELDS ===== */
     div[data-testid="stTextInput"] input,
     div[data-testid="stTextInput"] input:focus {
-        background: rgba(15, 20, 50, 0.8) !important;
-        border: 1.5px solid rgba(99, 102, 241, 0.25) !important;
+        background: #f8fafc !important;
+        border: 1.5px solid #e2e8f0 !important;
         border-radius: 12px !important;
-        color: #f1f5f9 !important;
+        color: #1e293b !important;
         padding: 12px 16px !important;
         font-size: 0.95rem !important;
-        transition: all 0.25s !important;
+        transition: all 0.2s !important;
         box-shadow: none !important;
     }
     div[data-testid="stTextInput"] input:focus {
-        border-color: rgba(99, 102, 241, 0.6) !important;
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12) !important;
+        border-color: #1a56db !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 4px #eff6ff !important;
     }
     div[data-testid="stTextInput"] label {
-        color: #94a3b8 !important;
-        font-size: 0.8rem !important;
+        color: #1e293b !important;
+        font-size: 0.85rem !important;
         font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.04em !important;
         margin-bottom: 6px !important;
     }
     div[data-testid="stTextInput"] input::placeholder {
-        color: #475569 !important;
+        color: #94a3b8 !important;
     }
 
     /* ===== BUTTONS ===== */
     button[kind="primary"],
     div[data-testid="stButton"] > button[kind="primary"] {
-        background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
+        background: #1a56db !important;
         color: white !important;
         border-radius: 12px !important;
         padding: 12px 24px !important;
         font-weight: 700 !important;
         font-size: 0.95rem !important;
         border: none !important;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
-        transition: all 0.25s !important;
-        letter-spacing: -0.01em !important;
+        box-shadow: 0 4px 6px rgba(26, 86, 219, 0.2) !important;
+        transition: all 0.2s !important;
     }
     button[kind="primary"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 22px rgba(79, 70, 229, 0.5) !important;
+        background: #1e40af !important;
+        transform: translateY(-1px) !important;
     }
     button[kind="secondary"],
     div[data-testid="stButton"] > button[kind="secondary"] {
-        background: rgba(99, 102, 241, 0.08) !important;
-        border: 1.5px solid rgba(99, 102, 241, 0.25) !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
         border-radius: 12px !important;
-        color: #818cf8 !important;
+        color: #64748b !important;
         padding: 10px 24px !important;
         font-weight: 600 !important;
-        transition: all 0.25s !important;
+        transition: all 0.2s !important;
     }
     button[kind="secondary"]:hover {
-        background: rgba(99, 102, 241, 0.15) !important;
-        border-color: rgba(99, 102, 241, 0.5) !important;
-    }
-
-    /* ===== RADIO OPTIONS (Pilihan Ganda) ===== */
-    div[data-testid="stRadio"] > div {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
-    div[data-testid="stRadio"] label {
-        background: rgba(15, 20, 50, 0.6) !important;
-        border: 1.5px solid rgba(99, 102, 241, 0.18) !important;
-        border-radius: 14px !important;
-        padding: 14px 20px !important;
-        color: #cbd5e1 !important;
-        font-weight: 500 !important;
-        transition: all 0.2s ease !important;
-        cursor: pointer !important;
-        backdrop-filter: blur(8px) !important;
-    }
-    div[data-testid="stRadio"] label:hover {
-        border-color: rgba(99, 102, 241, 0.5) !important;
-        background: rgba(99, 102, 241, 0.1) !important;
-        color: #e2e8f0 !important;
-        transform: translateX(4px) !important;
-    }
-    div[data-testid="stRadio"] label:has(input:checked) {
-        border-color: #6366f1 !important;
-        background: rgba(99, 102, 241, 0.15) !important;
-        box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.4), 0 4px 12px rgba(99, 102, 241, 0.15) !important;
-        color: #e0e7ff !important;
-        transform: translateX(4px) !important;
-    }
-    div[data-testid="stRadio"] label p {
-        color: inherit !important;
-        margin: 0 !important;
+        border-color: #1a56db !important;
+        color: #1a56db !important;
+        background: #eff6ff !important;
     }
 
     /* ===== CHECKBOX ===== */
     div[data-testid="stCheckbox"] label {
-        color: #94a3b8 !important;
+        color: #475569 !important;
         font-weight: 500 !important;
     }
     div[data-testid="stCheckbox"] label:has(input:checked) {
-        color: #e2e8f0 !important;
-    }
-    div[data-testid="stCheckbox"] > label > div[data-testid="stCheckbox"] {
-        background: rgba(99, 102, 241, 0.15) !important;
+        color: #1e293b !important;
+        font-weight: 700 !important;
     }
 
     /* ===== ALERTS / INFO BOX ===== */
@@ -257,211 +175,61 @@
     div[data-testid="stInfo"] {
         border-radius: 12px !important;
         border-width: 1px !important;
-        font-weight: 500 !important;
-        backdrop-filter: blur(8px) !important;
+        font-weight: 600 !important;
     }
     div[data-testid="stSuccess"] {
-        background: rgba(16, 185, 129, 0.1) !important;
-        border-color: rgba(16, 185, 129, 0.3) !important;
-        color: #34d399 !important;
+        background: #dcfce7 !important;
+        border-color: #bbf7d0 !important;
+        color: #166534 !important;
     }
     div[data-testid="stWarning"] {
-        background: rgba(245, 158, 11, 0.1) !important;
-        border-color: rgba(245, 158, 11, 0.3) !important;
-        color: #fbbf24 !important;
+        background: #fef08a !important;
+        border-color: #fde047 !important;
+        color: #854d0e !important;
     }
     div[data-testid="stError"] {
-        background: rgba(244, 63, 94, 0.1) !important;
-        border-color: rgba(244, 63, 94, 0.3) !important;
-        color: #fb7185 !important;
-    }
-    div[data-testid="stInfo"] {
-        background: rgba(99, 102, 241, 0.1) !important;
-        border-color: rgba(99, 102, 241, 0.3) !important;
-        color: #a5b4fc !important;
+        background: #fee2e2 !important;
+        border-color: #fecaca !important;
+        color: #991b1b !important;
     }
 
     /* ===== CAMERA INPUT ===== */
     div[data-testid="stCameraInput"] {
         border-radius: 16px !important;
         overflow: hidden !important;
-        border: 1.5px solid rgba(99, 102, 241, 0.2) !important;
-    }
-    div[data-testid="stCameraInput"] video,
-    div[data-testid="stCameraInput"] img {
-        border-radius: 14px !important;
+        border: 1.5px solid #e2e8f0 !important;
     }
     div[data-testid="stCameraInput"] button {
-        background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+        background: #1a56db !important;
         border-radius: 10px !important;
         color: white !important;
         font-weight: 700 !important;
     }
 
-    /* ===== PROGRESS BAR ===== */
-    div[data-testid="stProgress"] > div {
-        background: rgba(99, 102, 241, 0.15) !important;
-        border-radius: 99px !important;
-        height: 6px !important;
+    /* ===== SIDEBAR BUTTON GRID (exam navigation) ===== */
+    [data-testid="stSidebar"] [data-testid="stButton"] button {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        padding: 8px 4px !important;
+        transition: all 0.2s !important;
     }
-    div[data-testid="stProgress"] > div > div {
-        background: linear-gradient(90deg, #4f46e5, #818cf8) !important;
-        border-radius: 99px !important;
-    }
-
-    /* ===== COLUMNS / DIVIDERS ===== */
-    hr {
-        border-color: rgba(99, 102, 241, 0.15) !important;
-        margin: 16px 0 !important;
-    }
-
-    /* ===== SCORE DISPLAY ===== */
-    .score-radial {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        margin: 20px auto;
-        background: rgba(79, 70, 229, 0.06);
-        border: 6px solid transparent;
-        background-clip: padding-box;
-        position: relative;
-    }
-    .score-radial::before {
-        content: '';
-        position: absolute;
-        inset: -6px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #4f46e5, #818cf8, #4f46e5);
-        z-index: -1;
-    }
-    .score-value {
-        font-size: 3.5rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #818cf8, #c4b5fd);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        line-height: 1;
-    }
-    .score-label {
-        font-size: 0.75rem;
-        color: #64748b;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-top: 4px;
-    }
-
-    /* ===== STRIKE BADGE ===== */
-    .strike-badge {
-        background: rgba(244, 63, 94, 0.1);
-        color: #fb7185;
-        border: 1px solid rgba(244, 63, 94, 0.3);
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-weight: 700;
-        display: inline-block;
-        font-size: 0.85rem;
-    }
-
-    /* ===== HIDDEN TRIGGERS ===== */
-    .hidden-btn-container {
-        display: none !important;
-    }
-
-    /* ===== IFRAME CLEANUP ===== */
-    iframe[height="0"] {
-        position: absolute !important;
-        width: 0 !important;
-        height: 0 !important;
-        border: none !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-    div:has(> iframe[height="0"]),
-    div[data-testid="stVerticalBlock"] > div:has(iframe[height="0"]) {
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+    [data-testid="stSidebar"] [data-testid="stButton"] button:hover {
+        border-color: #1a56db !important;
+        color: #1a56db !important;
     }
 
     /* ===== CUSTOM SCROLLBAR ===== */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
-        background: rgba(99, 102, 241, 0.25);
+        background: #cbd5e1;
         border-radius: 99px;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(99, 102, 241, 0.45);
-    }
-
-    /* ===== SIDEBAR BUTTON GRID (exam navigation) ===== */
-    [data-testid="stSidebar"] [data-testid="stButton"] button {
-        background: rgba(20, 25, 60, 0.7) !important;
-        border: 1.5px solid rgba(99, 102, 241, 0.2) !important;
-        border-radius: 10px !important;
-        color: #94a3b8 !important;
-        font-weight: 700 !important;
-        font-size: 0.8rem !important;
-        padding: 8px 4px !important;
-        transition: all 0.2s !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stButton"] button:hover {
-        background: rgba(99, 102, 241, 0.15) !important;
-        border-color: #6366f1 !important;
-        color: #c7d2fe !important;
-    }
-
-    /* ===== METRIC CARDS ===== */
-    div[data-testid="stMetric"] {
-        background: rgba(15, 20, 50, 0.6) !important;
-        border: 1px solid rgba(99, 102, 241, 0.15) !important;
-        border-radius: 14px !important;
-        padding: 16px !important;
-        backdrop-filter: blur(10px) !important;
-    }
-    div[data-testid="stMetric"] label {
-        color: #64748b !important;
-        font-size: 0.75rem !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-    }
-    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
-        color: #818cf8 !important;
-        font-size: 1.8rem !important;
-        font-weight: 800 !important;
-    }
-
-    /* ===== MARKDOWN HEADERS ===== */
-    [data-testid="stMarkdownContainer"] h1,
-    [data-testid="stMarkdownContainer"] h2,
-    [data-testid="stMarkdownContainer"] h3 {
-        color: #f1f5f9 !important;
-        font-weight: 800 !important;
-    }
-    [data-testid="stMarkdownContainer"] p,
-    [data-testid="stMarkdownContainer"] li {
-        color: #94a3b8 !important;
-    }
-    [data-testid="stMarkdownContainer"] strong {
-        color: #e2e8f0 !important;
-    }
-
-    /* ===== EXAM SPECIFIC INLINE STYLES ===== */
-    .exam-topbar {
-        background: rgba(10, 12, 28, 0.85) !important;
-        border-bottom: 1px solid rgba(99, 102, 241, 0.15) !important;
-        backdrop-filter: blur(20px) !important;
-        padding: 12px 20px !important;
-        border-radius: 14px !important;
-        margin-bottom: 16px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
+        background: #94a3b8;
     }
 </style>

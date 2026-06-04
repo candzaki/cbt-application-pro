@@ -568,7 +568,7 @@ def calculate_results():
 if st.session_state.page == "login":
     col_l1, col_l2, col_l3 = st.columns([1, 1.8, 1])
     with col_l2:
-        st.markdown("<div class='cbt-container' style='padding-top: 30px;'>", unsafe_allow_html=True)
+        st.markdown("<span class='cbt-container-anchor'></span>", unsafe_allow_html=True)
         # Curve banner header
         logo_url = get_logo_base64()
         st.markdown("""
@@ -628,13 +628,12 @@ if st.session_state.page == "login":
             © CBT Application. Avnet.id, 2025
         </div>
         """, unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
 
 # 2. Register Page
 elif st.session_state.page == "register":
     col_r1, col_r2, col_r3 = st.columns([1, 1.8, 1])
     with col_r2:
-        st.markdown("<div class='cbt-container'>", unsafe_allow_html=True)
+        st.markdown("<span class='cbt-container-anchor'></span>", unsafe_allow_html=True)
         st.markdown("""
             <div class="cbt-logo-wrap" style="margin-top: 10px;">
                 <span style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:16px;background:#eff6ff;color:#1a56db;font-size:2.5rem;border:1px solid #bfdbfe;">📝</span>
@@ -671,7 +670,6 @@ elif st.session_state.page == "register":
         if st.button("Sudah punya akun? Masuk", use_container_width=True):
             st.session_state.page = "login"
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
 
 # 3. Student Dashboard
 elif st.session_state.page == "dashboard":
@@ -1037,7 +1035,7 @@ elif st.session_state.page == "exam":
 elif st.session_state.page == "confirm_submit":
     col_c1, col_c2, col_c3 = st.columns([1, 2.2, 1])
     with col_c2:
-        st.markdown("<div class='cbt-container' style='text-align: center;'>", unsafe_allow_html=True)
+        st.markdown("<span class='cbt-container-anchor'></span>", unsafe_allow_html=True)
         st.markdown("<h2>📋 Konfirmasi Penyerahan Ujian</h2>", unsafe_allow_html=True)
         st.write("Apakah Anda sudah yakin dengan seluruh jawaban Anda? Hasil evaluasi akan dikalkulasi secara otomatis oleh server.")
         
@@ -1049,14 +1047,13 @@ elif st.session_state.page == "confirm_submit":
         with col_cf2:
             if st.button("Kumpulkan Sekarang", use_container_width=True, type="primary"):
                 submit_exam_results(is_forced=False)
-        st.markdown("</div>", unsafe_allow_html=True)
 
 # 6. Results Page
 elif st.session_state.page == "results":
     res = st.session_state.results
     col_rs1, col_rs2, col_rs3 = st.columns([1, 2.2, 1])
     with col_rs2:
-        st.markdown("<div class='cbt-container' style='text-align: center;'>", unsafe_allow_html=True)
+        st.markdown("<span class='cbt-container-anchor'></span>", unsafe_allow_html=True)
         st.markdown("<h2>Ujian Selesai</h2>", unsafe_allow_html=True)
         
         if res["status"] == "Disikualifikasi":
@@ -1153,4 +1150,3 @@ elif st.session_state.page == "results":
             st.session_state.clear()
             st.session_state.page = "login"
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)

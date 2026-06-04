@@ -88,7 +88,7 @@
         100% { background-position: 0% 50%; }
     }
 
-    .cbt-container {
+    div[data-testid="column"]:has(.cbt-container-anchor) {
         position: relative !important;
         /* Glassmorphism with dual-corner glowing orbs (Dark Mode) */
         background: 
@@ -108,13 +108,13 @@
         transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
     }
     
-    .cbt-container:hover {
+    div[data-testid="column"]:has(.cbt-container-anchor):hover {
         transform: translateY(-4px) scale(1.005) !important;
         box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.6), 0 15px 20px -10px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.1) !important;
     }
 
     /* Pemanis: Animated Top Gradient Accent */
-    .cbt-container::before {
+    div[data-testid="column"]:has(.cbt-container-anchor)::before {
         content: "" !important;
         position: absolute !important;
         top: 0 !important;
@@ -127,21 +127,23 @@
     }
 
     /* Keep container contents above the background glows */
-    .cbt-container > div, .cbt-container > form, .cbt-container > img {
+    div[data-testid="column"]:has(.cbt-container-anchor) > div, 
+    div[data-testid="column"]:has(.cbt-container-anchor) > form, 
+    div[data-testid="column"]:has(.cbt-container-anchor) > img {
         position: relative !important;
         z-index: 2 !important;
     }
 
     /* ===== TEXT OVERRIDES ===== */
-    .cbt-container h1,
-    .cbt-container h2,
-    .cbt-container h3 {
+    div[data-testid="column"]:has(.cbt-container-anchor) h1,
+    div[data-testid="column"]:has(.cbt-container-anchor) h2,
+    div[data-testid="column"]:has(.cbt-container-anchor) h3 {
         color: #ffffff !important;
         font-weight: 800 !important;
     }
-    .cbt-container p,
-    .cbt-container label,
-    .cbt-container span {
+    div[data-testid="column"]:has(.cbt-container-anchor) p,
+    div[data-testid="column"]:has(.cbt-container-anchor) label,
+    div[data-testid="column"]:has(.cbt-container-anchor) span {
         color: #94a3b8 !important;
     }
 

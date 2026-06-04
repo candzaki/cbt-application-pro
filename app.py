@@ -680,18 +680,20 @@ elif st.session_state.page == "dashboard":
             <div style="font-size: 0.7rem; color: #64748b;">Oleh GuruInovatif.id</div>
         </div>
         <div style="font-size: 0.8rem; color: #64748b; font-weight: 700; margin-bottom: 12px; margin-left: 12px;">Menu</div>
-        <div style="background: #1a56db; color: white; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; cursor: pointer;">
-            <span>🏠</span> Beranda
-        </div>
-        <div style="color: #64748b; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; cursor: pointer;">
-            <span>📋</span> Kelas
-        </div>
-        <div style="font-size: 0.8rem; color: #64748b; font-weight: 700; margin-bottom: 12px; margin-left: 12px;">Lainnya</div>
-        <div style="color: #64748b; padding: 12px 16px; border-radius: 12px; font-weight: 600; display: flex; align-items: center; gap: 12px; cursor: pointer;">
-            <span>⚙️</span> Pengaturan
-        </div>
-        <br><br>
     """, unsafe_allow_html=True)
+    
+    if st.sidebar.button("🏠 Beranda", use_container_width=True):
+        st.session_state.info_msg = None
+        
+    if st.sidebar.button("📋 Kelas", use_container_width=True):
+        st.session_state.info_msg = "Fitur Kelas masih dalam tahap pengembangan."
+        
+    st.sidebar.markdown('<div style="font-size: 0.8rem; color: #64748b; font-weight: 700; margin-top: 24px; margin-bottom: 12px; margin-left: 12px;">Lainnya</div>', unsafe_allow_html=True)
+    
+    if st.sidebar.button("⚙️ Pengaturan", use_container_width=True):
+        st.session_state.info_msg = "Fitur Pengaturan masih dalam tahap pengembangan."
+        
+    st.sidebar.markdown("<br><br>", unsafe_allow_html=True)
     
     if st.sidebar.button("Logout", use_container_width=True):
         st.session_state.clear()
@@ -700,6 +702,10 @@ elif st.session_state.page == "dashboard":
 
     # Main Content Area
     st.markdown("<div style='max-width: 1080px; margin: 0 auto;'>", unsafe_allow_html=True)
+    
+    if st.session_state.get("info_msg"):
+        st.info(st.session_state.info_msg, icon="ℹ️")
+        st.session_state.info_msg = None
     
     # Header profile
     st.markdown(f"""

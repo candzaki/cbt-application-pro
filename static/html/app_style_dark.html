@@ -82,51 +82,51 @@
     }
 
     /* ===== CBT CONTAINER — Main Card ===== */
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
     .cbt-container {
         position: relative !important;
-        background: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 20px !important;
-        padding: 36px !important;
-        margin-top: 8px !important;
-        margin-bottom: 16px !important;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+        /* Glassmorphism with dual-corner glowing orbs (Dark Mode) */
+        background: 
+            radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 0% 100%, rgba(245, 158, 11, 0.1) 0%, transparent 40%),
+            rgba(30, 41, 59, 0.85) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(51, 65, 85, 0.8) !important;
+        border-radius: 24px !important;
+        padding: 40px !important;
+        margin-top: 12px !important;
+        margin-bottom: 20px !important;
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4), 0 10px 15px -5px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255,255,255,0.05) !important;
         color: #f8fafc !important;
         overflow: hidden !important;
-        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
     }
     
     .cbt-container:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+        transform: translateY(-4px) scale(1.005) !important;
+        box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.6), 0 15px 20px -10px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.1) !important;
     }
 
-    /* Pemanis (Sweetener): Top Gradient Accent */
+    /* Pemanis: Animated Top Gradient Accent */
     .cbt-container::before {
         content: "" !important;
         position: absolute !important;
         top: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        height: 5px !important;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #f59e0b) !important;
-    }
-    
-    /* Pemanis (Sweetener): Subtle Background Radial Glow (Dark Mode) */
-    .cbt-container::after {
-        content: "" !important;
-        position: absolute !important;
-        top: -50px !important;
-        right: -50px !important;
-        width: 250px !important;
-        height: 250px !important;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%) !important;
-        border-radius: 50% !important;
-        z-index: 0 !important;
-        pointer-events: none !important;
+        height: 6px !important;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #f59e0b, #3b82f6) !important;
+        background-size: 300% 300% !important;
+        animation: gradientMove 4s ease infinite !important;
     }
 
-    /* Keep container contents above the glow */
+    /* Keep container contents above the background glows */
     .cbt-container > div, .cbt-container > form, .cbt-container > img {
         position: relative !important;
         z-index: 2 !important;

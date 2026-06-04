@@ -1107,38 +1107,38 @@ elif st.session_state.page == "results":
             
             if not user_ans:
                 status_color = "#f59e0b"
-                status_bg = "#fef3c7"
+                status_bg = "rgba(245, 158, 11, 0.1)"
                 status_text = "TIDAK DIJAWAB"
                 user_ans = "-"
             elif is_correct:
                 status_color = "#10b981"
-                status_bg = "#d1fae5"
+                status_bg = "rgba(16, 185, 129, 0.1)"
                 status_text = "BENAR"
             else:
                 status_color = "#ef4444"
-                status_bg = "#fee2e2"
+                status_bg = "rgba(239, 68, 68, 0.1)"
                 status_text = "SALAH"
                 
             pembahasan_text = dummy_pembahasan.get(q_id, "Pembahasan detail untuk soal ini sedang disusun oleh dosen pengampu mata kuliah terkait. Silakan rujuk ke buku teks referensi utama bab " + str((i%5)+1) + ".")
             
             with st.expander(f"Soal {i+1} — {status_text}"):
                 st.markdown(f"""
-<div style="font-size: 1.05rem; color: #1e293b; margin-bottom: 15px; line-height: 1.6;">
+<div style="font-size: 1.05rem; margin-bottom: 15px; line-height: 1.6; word-wrap: break-word; color: var(--text-color);">
 <strong>Pertanyaan:</strong><br>{q['text']}
 </div>
-<div style="display: flex; gap: 15px; margin-bottom: 20px;">
-<div style="flex: 1; background: {status_bg}; padding: 12px; border-radius: 8px; border: 1px solid {status_color}40;">
+<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+<div style="flex: 1 1 200px; min-width: 0; background: {status_bg}; padding: 12px; border-radius: 8px; border: 1px solid {status_color}40; word-wrap: break-word;">
 <span style="font-size: 0.85rem; color: {status_color}; font-weight: 700; text-transform: uppercase;">Jawaban Anda</span><br>
-<strong style="color: #0f172a; font-size: 1.1rem;">{user_ans}</strong>
+<strong style="font-size: 1.1rem; display: block; margin-top: 4px; color: var(--text-color);">{user_ans}</strong>
 </div>
-<div style="flex: 1; background: #f0fdf4; padding: 12px; border-radius: 8px; border: 1px solid #10b98140;">
+<div style="flex: 1 1 200px; min-width: 0; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.4); word-wrap: break-word;">
 <span style="font-size: 0.85rem; color: #10b981; font-weight: 700; text-transform: uppercase;">Kunci Jawaban</span><br>
-<strong style="color: #0f172a; font-size: 1.1rem;">{correct_ans}</strong>
+<strong style="font-size: 1.1rem; display: block; margin-top: 4px; color: var(--text-color);">{correct_ans}</strong>
 </div>
 </div>
-<div style="background: #f8fafc; border-left: 4px solid #1a56db; padding: 15px; border-radius: 0 8px 8px 0;">
-<strong style="color: #1a56db; font-size: 0.95rem;">💡 Penjelasan Lengkap:</strong>
-<div style="color: #475569; margin-top: 8px; line-height: 1.6; font-size: 0.95rem;">
+<div style="background: rgba(128, 128, 128, 0.05); border-left: 4px solid #3b82f6; padding: 15px; border-radius: 0 8px 8px 0; word-wrap: break-word;">
+<strong style="color: #3b82f6; font-size: 0.95rem;">💡 Penjelasan Lengkap:</strong>
+<div style="margin-top: 8px; line-height: 1.6; font-size: 0.95rem; color: var(--text-color); opacity: 0.9;">
 {pembahasan_text}
 </div>
 </div>
